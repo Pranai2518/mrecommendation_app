@@ -1,0 +1,138 @@
+.navbar{
+    position:fixed;
+    top:0;
+    z-index: 10;
+    width:100vw;
+    height:4rem;
+
+    /* background: var(--primary);
+    color: var(--font-primary); */
+  
+    font-size: 2rem; 
+
+     
+    display: grid;
+    grid-template-columns: .5fr 1fr .5fr;
+    align-items: center;
+    transition: all .5s ease-out;
+    /* background: var(--secondary-dark) */
+    /* background: linear-gradient(180deg, var(--secondary-dark),rgba(0,0,0,0)); */
+}
+
+/* THEME */
+.navbar.sroute .search_bar{background: rgb(255, 255, 255);} 
+.navbar.toggle_dark{background: var(--primary);}
+.navbar.toggle_light{background: var(--primary);box-shadow: 0 1px 15px var(--button-shadow);}
+.navbar.toggle_dark .search_bar{background: white;}
+.navbar.toggle_light .search_bar{background: rgba(0,0,0,.1);}
+/* THEME-end */
+
+/* BURGER */
+.navbar .burger{
+    margin-left: 5%;
+    /* text-align: left; */
+    position: relative;
+    width:2.5rem;
+    height: 1.8rem;
+}
+.navbar .burger span:first-child,
+.navbar .burger span:last-child,
+.navbar .burger span:nth-child(2){
+    position: absolute;
+    width:100%;
+    height: .2rem;
+    background:var(--font-primary);
+    border-radius: 1rem;
+}
+.navbar .burger span:first-child{ top:0}
+.navbar .burger span:nth-child(2){top:.8rem}
+.navbar .burger span:last-child{bottom: 0;}
+
+
+/* SEARCH BAR */
+.navbar .search_bar{
+    justify-self: center;
+    width:max-content;
+    display: flex;
+    align-items:center;
+    gap:1rem;
+
+    background:rgba(255,255,255,.5);
+    padding: .2rem .5rem;
+}
+
+.navbar .search_bar input{
+    width: min(50vw,20rem);
+    height:2rem;
+
+    text-align: center;
+    font-size: 1.1rem;
+    background: none;
+    border: none;
+}
+.navbar .search_bar input::placeholder{
+    color:rgba(0,0,0,.6);
+}
+.navbar .search_bar input:focus{
+    outline: none;
+}
+.navbar .search_bar button{
+    border:none;
+    background: none;
+}
+.navbar .search_bar img{
+    width:1.3rem;
+    aspect-ratio: 1/1;
+}
+
+
+
+/* PROFILE */
+.navbar .profile{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    
+}
+.navbar .profile .img{
+    width:2.5rem;
+    aspect-ratio: 1/1;
+    
+    background: var(--third);
+    box-shadow: 0 0 3px rgba(0,0,0,.25);
+    border-radius: 5px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-size: 1.6rem;
+}
+.navbar .profile .name{
+    font-size: 1.4rem;
+    color: var(--font-primary);
+    
+}
+.navbar .profile .name p{
+    display: inline;
+    font-weight: 700;
+}
+.navbar .profile button{
+    margin-left: 1rem;
+}
+
+
+
+@media (max-width:600px){
+    .navbar{
+        padding: .5rem;
+        display: grid;
+        grid-template-columns:.1fr minmax(100px,1fr);
+        align-items: left;
+         
+    }
+    .navbar .profile{
+        position: absolute;
+        bottom: -40%;
+        right: 6%;
+    }
+    .navbar .profile .name{display: none;}
+}

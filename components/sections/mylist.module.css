@@ -1,0 +1,35 @@
+ .mylist{
+    padding:5% 0;
+    height:80vh;
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
+    background: var(--primary);
+   
+}
+ .mylist > .head{
+ 
+    position: relative;
+    left:6%;
+    margin-bottom: -1rem;
+    width:max-content;
+   
+    font-weight: 300;
+    font-size: clamp(2rem,5vw,3rem);
+    color: var(--font-primary);
+}
+ 
+ .mylist > .head .name{
+    position: relative;
+    left:.4rem;
+    bottom: 0;
+}
+ .mylist > .head .name::before{
+    content: '';
+    position: absolute;
+    left:-.6rem;
+    transform: translateY(30%);
+    width:.4rem;
+    height: 70%;
+    background: var(--secondary);
+}

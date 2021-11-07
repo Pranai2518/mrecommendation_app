@@ -1,0 +1,38 @@
+.search_m{
+    position: absolute;
+    width:100%;
+    min-height: 100vh;
+    background: linear-gradient(180deg,var(--secondary),var(--primary) 90%);
+    color: white;
+    padding-bottom: 1%;
+}
+
+.search_m .content{
+    
+    margin-top: max(4rem,6%);
+    padding: 0rem 2%;
+     
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(200px,.5fr));
+    grid-row-gap: 1rem;
+}
+.search_m .content .m_card{margin:.5rem}
+
+@media (max-width:600px){
+    .search_m .content{
+        margin-left: 0%;
+        margin-right: 0%;
+        grid-template-columns: repeat(auto-fit, minmax(100px,.5fr));
+    }
+    .search_m .content .m_card{
+        --card-width:min(30vw,7rem);
+        --card-height:min(50vw,10rem)
+    }
+    .search_m .m_card  .title{ font-size: clamp(.6rem,8vw,.9rem);}
+    .search_m .m_card  .more{ font-size: clamp(.3rem,5vw,.7rem)}
+    .search_m .m_card .top .imdb{
+        padding: .2rem;
+        font-size:clamp(.3rem,5vw,.7rem) ;
+    }
+}

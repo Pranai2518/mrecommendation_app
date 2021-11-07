@@ -1,0 +1,63 @@
+.m_carousel{
+    margin:auto;
+    width:90%;
+    padding:0 .5rem;
+
+    animation: animate1 .8s ease 1;
+}
+@keyframes animate1{
+  0%{opacity:0}
+  100%{opacity: 1;}
+}
+.m_carousel .slick-list{
+  height:max(55vh,20rem);
+}
+.m_carousel .slick-arrow.slick-prev,
+.m_carousel .slick-arrow.slick-next{
+    opacity: 0 !important;
+}
+.m_carousel:hover .slick-arrow.slick-prev,
+.m_carousel:hover .slick-arrow.slick-next{
+    opacity: 1 !important;
+}
+ 
+ 
+.m_carousel .slick-arrow.slick-prev::before{
+  
+    font-family: "Font Awesome 5 Free";
+    content:'\f053';
+    color:var(--font-primary) !important;
+    font-weight: 900;
+    font-size: 2rem;
+     
+  }
+ 
+.m_carousel .slick-arrow.slick-next::before{
+   
+    font-family: "Font Awesome 5 Free";
+    content:'\f054';
+    color:var(--font-primary) !important;
+    font-weight: 900;
+    font-size: 2rem;
+  }
+.m_carousel .wrapper{
+  padding: 1rem 0;
+}
+
+
+/* RESPONSIVE SLIDER */
+ 
+@media (max-width:600px){
+ 
+  .m_carousel .slick-list{
+    height: max(30vh,16rem);
+  }
+  .m_carousel .slick-arrow.slick-prev,
+  .m_carousel .slick-arrow.slick-next{
+    opacity: 1 !important;
+  }
+  .m_carousel .wrapper{
+    padding: .3rem 0;
+  }
+ 
+}
