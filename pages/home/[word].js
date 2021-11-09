@@ -8,7 +8,7 @@ import { Loading } from '../../components/loadings/Loading'
 import { useSelector } from 'react-redux'
 import WithAuth from '../../hooks/WithAuth'
 
-function search() {
+function Search() {
     const router = useRouter()
     const { word } = router.query
     const [ids, setIds] = useState()
@@ -55,9 +55,9 @@ function search() {
     )
 }
 
-search.Layout = Layout
+Search.Layout = Layout
 
-export default search
+export default Search
 
 // export const getServerSideProps = async (context) => {
 //     var ids

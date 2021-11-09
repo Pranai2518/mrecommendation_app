@@ -10,7 +10,7 @@ const Log = styled.button`
     font-size:2rem;
     margin-top:10%;
 `
-export default function login() {
+export default function Login() {
     const router = useRouter()
     const dispatch = useDispatch()
     const loading1 = useSelector(state => state.currentUser.status)
