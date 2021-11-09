@@ -27,15 +27,19 @@
     transition: transform .5s ease-out;
 }
 /* .m_card:hover{box-shadow: none;} */
+.m_card .image{
+    position: relative;
+    width:var(--card-width);
+    height:var(--card-height)
+}
 .m_card .image .poster{
     position: absolute;
     z-index:1;
-    width:var(--card-width);
-    height: 100%;
     /* height:var(--card-height); */
 
-    object-fit: cover;
+    /* object-fit:cover;
     object-position: 50% 50%;
+    */
     border-radius: var(--radius);
 }
 .m_card:hover .image::before{
@@ -87,21 +91,26 @@
 .m_card .top .options .tooltip:hover::before{
     content:attr(data-title);
     position:absolute;
-    top:20%;
+    z-index: 1;
+    top:10%;
     right:150%;
-    border-radius: 0 5px 5px 0;
+  
     width:max-content;
-    height:1.3rem;
-    padding: 0 .5rem;
+    height:1.4rem;
+    padding: 0 15%;
+    border-radius: 0 5px 5px 0;
     background: white;
     color: black;
+    font-size:clamp(.7rem,1vw,.9rem);
+    display: flex;
+    align-items: center;
 }
 .m_card .top .options .tooltip:hover::after{
     content: '';
     position: absolute;
-    top:20%;
-    right:120%;
-   
+    z-index: -1;
+    top:12%;
+    right:125%;
    
     width:0rem;
     height:0rem;

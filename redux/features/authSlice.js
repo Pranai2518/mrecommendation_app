@@ -33,13 +33,13 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 //list all users
 export const getAllUsers = createAsyncThunk('auth/allUsers', async () => {
     var data
-    await axios.get('http://localhost:4500/user/all')
+    await axios.get(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/all`)
         .then(res => data = res.data.users)
     return data
 })
 //add to database
 export const addToDB = createAsyncThunk('auth/addUser', async (user) => {
-    await axios.post('http://localhost:4500/user/add', user)
+    await axios.post(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/add`, user)
         .then(res => console.log('new User'))
 })
 
@@ -77,6 +77,7 @@ const Auth = createSlice({
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = { authenticated: false }
+                state.status = 'checked'
             })
             .addCase(getAllUsers.fulfilled, (state, action) => {
                 state.all = action.payload

@@ -4,7 +4,7 @@ import axios from 'axios'
 //add userMovie data
 export const addMovieData = createAsyncThunk('userData/addMovie', async (obj, thunkAPI) => {
     var data
-    await axios.post(`http://localhost:4500/user/add/movie`, obj)
+    await axios.post(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/add/movie`, obj)
         .then(res => data = res.data)
         .catch(err => console.log(err))
     return data
@@ -13,7 +13,7 @@ export const addMovieData = createAsyncThunk('userData/addMovie', async (obj, th
 //delete userMovie data
 export const deleteMovieData = createAsyncThunk('userData/deleteMovie', async ({ uid, mid }, thunkAPI) => {
     var data
-    await axios.delete(`http://localhost:4500/user/${uid}/movie/${mid}`)
+    await axios.delete(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/${uid}/movie/${mid}`)
         .then(res => { data = res.data })
         .catch(err => console.log(err))
     return data
@@ -22,7 +22,7 @@ export const deleteMovieData = createAsyncThunk('userData/deleteMovie', async ({
 //update userMovie data
 export const updateMovieData = createAsyncThunk('userData/updateMovie', async (uid) => {
     var data
-    await axios.get(`http://localhost:4500/user/${uid}/movies`)
+    await axios.get(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/${uid}/movies`)
         .then(res => data = res.data)
     return data
 })
@@ -30,7 +30,7 @@ export const updateMovieData = createAsyncThunk('userData/updateMovie', async (u
 //fetch movie
 export const getMovie = createAsyncThunk('userData/getMovie', async (uid, mid) => {
     var data
-    await axios.get(`http://localhost:4500/user/${uid}/movie/${mid}`)
+    await axios.get(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/${uid}/movie/${mid}`)
         .then(res => data = res.data)
     return data
 })
@@ -38,7 +38,7 @@ export const getMovie = createAsyncThunk('userData/getMovie', async (uid, mid) =
 //fetch all userMovies
 export const fetchMovies = createAsyncThunk('userData/fetchall', async (uid) => {
     var data
-    await axios.get(`http://localhost:4500/user/${uid}/movies`)
+    await axios.get(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/${uid}/movies`)
         .then(res => data = res.data)
     return data
 })

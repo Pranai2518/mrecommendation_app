@@ -5,8 +5,9 @@ import styles from '../styles/Navbar.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { toDark, toLight, setTheme } from '../redux/features/themeSlice'
 import { logout } from '../redux/features/authSlice'
+import WithAuth from '../hooks/WithAuth'
 
-export default function Navbar() {
+function Navbar() {
     const theme = useSelector((state) => state.theme.value)
     const dispatch = useDispatch()
 
@@ -35,21 +36,25 @@ export default function Navbar() {
     const handleRoute = () => {
         var word = wordRef.current.value
         if (word) {
+            window.localStorage.setItem('s-word', word)
             router.push(`/home/${word}`, undefined, { shallow: true })
             setToggle(true)
         }
         else {
+            window.localStorage.setItem('s-word', word)
             router.push(`/home`, undefined, { shallow: true })
             setToggle(false)
         }
     }
     const handleIcon = () => {
         wordRef.current.value = ''
+        window.localStorage.removeItem('s-word')
         router.push('/home', undefined, { shallow: true })
         setToggle(false)
     }
     useEffect(() => {
-        if (word) { wordRef.current.value = word; setToggle(true) }
+        let s = window.localStorage.getItem('s-word')
+        if (s) { wordRef.current.value = s; setToggle(true) }
         else { wordRef.current.value = ''; setToggle(false) }
         const t = window.localStorage.getItem('theme')
         if (t) dispatch(setTheme(t))
@@ -69,9 +74,11 @@ export default function Navbar() {
             <div className={styles.profile}>
                 <div className={styles.img} onClick={handleTheme} >{theme === 'dark' ? <h5 style={{ margin: '0' }}>D</h5> : <h5 style={{ margin: '0' }}>L</h5>}</div>
                 <div className={styles.name} >Hello <p>There!</p></div>
-                <button >Logout</button>
+                <button onClick={() => { dispatch(logout()) }} >Logout</button>
             </div>
         </div>
 
     )
 }
+
+export default Navbar

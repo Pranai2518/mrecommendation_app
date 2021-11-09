@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addToDB, setUserStatus } from '../redux/features/authSlice'
 import { fetchMovies, reloadList } from '../redux/features/userDataSlice'
 import Navbar from "./Navbar"
+import MovieModal from './Moviedetails/MovieModal'
 
 export default function Layout({ children }) {
     const all = useSelector(state => state.currentUser.all)
@@ -35,6 +36,8 @@ export default function Layout({ children }) {
         <>
             <Navbar />
             {children}
+            <MovieModal />
+
         </>
     )
 }

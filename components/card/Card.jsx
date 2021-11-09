@@ -3,6 +3,7 @@ import styles from './card.module.css'
 import axios from 'axios'
 import styled from 'styled-components'
 import { Skeleton } from '@mui/material'
+import Image from 'next/image'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { addMovieData, deleteMovieData } from '../../redux/features/userDataSlice'
@@ -43,7 +44,7 @@ export default function Card({ id, size }) {
     }
     const fetchMovie = async (signal) => {
         setLoading(true)
-        await axios.get(`https://www.omdbapi.com/?apikey=5bb48b69&i=${id}`, { signal: signal }, { headers: { 'Access-Control-Allow-Origin': '*' } })
+        await axios.get(`https://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_KEY}&i=${id}`, { signal: signal }, { headers: { 'Access-Control-Allow-Origin': '*' } })
             .then(data => {
                 const res = data.data
                 const obj = {
@@ -120,7 +121,7 @@ export default function Card({ id, size }) {
         <MCard className={styles.m_card} size={size}>
             {!loading && details ? <>
                 <div className={styles.image} onClick={() => { dispatch(setMovieId({ t: details.title, i: details.id })); dispatch(setOpen(true)); }}>
-                    <img className={styles.poster} src={details.poster} alt="name1" />
+                    <Image objectFit='cover' layout='fill' className={styles.poster} src={details.poster} alt="name1" />
                 </div>
 
                 <div className={styles.top}>
