@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-// import MovieModal from '../Moviedetails/MovieModal'
 import { useSelector, useDispatch } from 'react-redux'
 import { addToDB, setUserStatus } from '../redux/features/authSlice'
 import { fetchMovies, reloadList } from '../redux/features/userDataSlice'
@@ -26,7 +25,7 @@ export default function Layout({ children }) {
                 dispatch(addToDB(user))
             } else {
                 dispatch(setUserStatus('idle'))
-                console.log('old User')
+                // console.log('old User')
             }
             setTimeout(() => { dispatch(fetchMovies(uid)); }, 500)
 
@@ -37,7 +36,6 @@ export default function Layout({ children }) {
             <Navbar />
             {children}
             <MovieModal />
-
         </>
     )
 }

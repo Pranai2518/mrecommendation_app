@@ -8,6 +8,7 @@
     border-radius: var(--radius);
     box-shadow: 0 0 10px  var(--card-shadow);
     margin:0 .5rem;
+    overflow: hidden;
 }
 .m_card.large{
     --card-width:15rem;
@@ -28,20 +29,16 @@
 }
 /* .m_card:hover{box-shadow: none;} */
 .m_card .image{
-    position: relative;
+    position: relative !important;
     width:var(--card-width);
     height:var(--card-height);
 }
-.m_card .image .poster{
-    position: absolute;
+/* .m_card .image .poster{
+    
     z-index:1;
     
-
-    /* object-fit:cover;
-    object-position: 50% 50%;
-    */
     border-radius: var(--radius);
-}
+} */
 .m_card:hover .image::before{
     content: '';
     position: absolute;

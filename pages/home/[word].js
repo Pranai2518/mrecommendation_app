@@ -24,7 +24,7 @@ function Search() {
     }
 
     useEffect(() => {
-        if (!user && status === 'checked') router.replace('/login')
+        if (!user) router.replace('/login')
     }, [user])
 
     useEffect(() => {
@@ -40,16 +40,18 @@ function Search() {
     return (
 
         <div className={styles.search_m} >
-            {loading ? <Loading /> :
-                <>
-                    {ids?.length ?
-                        <div className={styles.content}>
-                            {ids.map(id => (
-                                <Card id={id} key={id} size='medium' />
-                            ))}
-                        </div>
-                        : <div style={{ display: 'grid', placeItems: 'center', paddingTop: '20%' }}> <h1>No Matches</h1></div>}
-                </>}
+            <div className={styles.container}>
+                {loading ? <Loading /> :
+                    <>
+                        {ids?.length ?
+                            <div className={styles.content}>
+                                {ids.map(id => (
+                                    <Card id={id} key={id} size='medium' />
+                                ))}
+                            </div>
+                            : <div style={{ display: 'grid', placeItems: 'center', paddingTop: '20%' }}> <h1>No Matches</h1></div>}
+                    </>}
+            </div>
         </div>
 
     )

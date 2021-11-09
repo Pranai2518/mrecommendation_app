@@ -16,7 +16,7 @@ export default function Login() {
     const loading1 = useSelector(state => state.currentUser.status)
     const access = useSelector(state => state.currentUser.user.authenticated)
     useEffect(() => {
-        console.log(`login:${access}`)
+        // console.log(`login:${access}`)
         if (access) router.replace('/home', undefined, { shallow: true })
     }, [access])
 

@@ -1,12 +1,19 @@
 .search_m{
     position: absolute;
     width:100%;
-    min-height: 100vh;
-    background: linear-gradient(180deg,var(--secondary),var(--primary) 90%);
     color: white;
-    padding-bottom: 1%;
 }
+.search_m::before{
+    content: '';
+    position:fixed;
+    width:100vw;
+    height: 100vh;
+    background: linear-gradient(180deg,var(--secondary),var(--primary) 90%);
+}
+/* .search_m .container{
+    position: absolute;
 
+} */
 .search_m .content{
     
     margin-top: max(4rem,6%);
