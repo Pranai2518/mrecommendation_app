@@ -30,12 +30,12 @@
 .m_card .image{
     position: relative;
     width:var(--card-width);
-    height:var(--card-height)
+    height:var(--card-height);
 }
 .m_card .image .poster{
     position: absolute;
     z-index:1;
-    /* height:var(--card-height); */
+    
 
     /* object-fit:cover;
     object-position: 50% 50%;

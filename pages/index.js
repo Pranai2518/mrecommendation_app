@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 export default function Index() {
   const router = useRouter()
   useEffect(() => {
-    router.push('/home', undefined, { shallow: true })
+    router.push('/login', undefined, { shallow: true })
   }, [])
   return (
     <></>

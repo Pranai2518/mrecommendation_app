@@ -1,19 +1,21 @@
-import { Link } from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import styles from '../styles/Navbar.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { toDark, toLight, setTheme } from '../redux/features/themeSlice'
 import { logout } from '../redux/features/authSlice'
-import WithAuth from '../hooks/WithAuth'
+
+import Brightness2Icon from '@mui/icons-material/Brightness2';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 function Navbar() {
     const theme = useSelector((state) => state.theme.value)
+    const pUrl = useSelector(state => state.currentUser.user.photoUrl)
     const dispatch = useDispatch()
 
     const wordRef = useRef()
     const router = useRouter()
-    const { word } = router.query
     const handleTheme = () => {
         if (theme === 'dark') {
             localStorage.setItem('theme', 'light')
@@ -72,9 +74,13 @@ function Navbar() {
                 <button>{toggle ? <img onClick={handleIcon} src='/assets/x-mark-thin.png' alt='hh' style={{ cursor: 'pointer' }} /> : <img src='/assets/search-thin.png' alt='hh' />}</button>
             </div>
             <div className={styles.profile}>
-                <div className={styles.img} onClick={handleTheme} >{theme === 'dark' ? <h5 style={{ margin: '0' }}>D</h5> : <h5 style={{ margin: '0' }}>L</h5>}</div>
-                <div className={styles.name} >Hello <p>There!</p></div>
-                <button onClick={() => { dispatch(logout()) }} >Logout</button>
+                <div className={styles.theme} onClick={handleTheme} >{theme === 'dark' ? <WbSunnyIcon /> : <Brightness2Icon />}</div>
+                {/* <div className={styles.name} >Hello <p>There!</p></div> */}
+                <div className={styles.user}>
+                    <div className={styles.pic}><img src={pUrl} alt='profile' /></div>
+                    <div className={styles.logout} ><LogoutIcon onClick={() => { dispatch(logout()) }} /></div>
+                </div>
+
             </div>
         </div>
 

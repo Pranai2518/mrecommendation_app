@@ -121,7 +121,7 @@ export default function Card({ id, size }) {
         <MCard className={styles.m_card} size={size}>
             {!loading && details ? <>
                 <div className={styles.image} onClick={() => { dispatch(setMovieId({ t: details.title, i: details.id })); dispatch(setOpen(true)); }}>
-                    <Image objectFit='cover' layout='fill' className={styles.poster} src={details.poster} alt="name1" />
+                    <Image objectFit='cover' layout='fill' className={styles.poster} src={details.poster} priority alt="name1" />
                 </div>
 
                 <div className={styles.top}>

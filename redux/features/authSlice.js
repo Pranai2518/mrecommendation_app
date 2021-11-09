@@ -56,7 +56,6 @@ const Auth = createSlice({
     initialState,
     reducers: {
         setCurrentUser: (state, action) => {
-            // state.status = 'idle'
             if (action.payload) {
                 state.user = action.payload
                 state.user.authenticated = true
@@ -75,9 +74,13 @@ const Auth = createSlice({
             .addCase(loginWithGoogle.pending, (state) => {
                 state.status = 'loading'
             })
+            .addCase(logout.pending, (state) => {
+                state.user = { authenticated: false }
+                state.status = 'loading'
+            })
             .addCase(logout.fulfilled, (state) => {
                 state.user = { authenticated: false }
-                state.status = 'checked'
+                state.status = 'done'
             })
             .addCase(getAllUsers.fulfilled, (state, action) => {
                 state.all = action.payload

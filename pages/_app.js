@@ -1,10 +1,9 @@
 import '../styles/globals.css'
-
+import { Provider } from 'react-redux'
+import store from '../redux/store'
 import Head from 'next/head'
 import Script from 'next/script'
 import React from 'react'
-import { Provider } from 'react-redux'
-import store from '../redux/store'
 import { checkUser } from '../redux/features/authSlice'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
