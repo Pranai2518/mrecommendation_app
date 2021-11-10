@@ -1,16 +1,15 @@
  .mylist{
-    padding:5% 0;
-    height:80vh;
+    /* border:1px solid red; */
+    margin:.5rem .5rem;
+    
     display: flex;
     flex-direction: column;
     gap:2rem;
-    background: var(--primary);
-   
 }
  .mylist > .head{
  
     position: relative;
-    left:6%;
+    left:8%;
     margin-bottom: -1rem;
     width:max-content;
    
@@ -21,15 +20,36 @@
  
  .mylist > .head .name{
     position: relative;
-    left:.4rem;
+    left:0;
     bottom: 0;
 }
- .mylist > .head .name::before{
+ /* .mylist > .head .name::before{
     content: '';
     position: absolute;
-    left:-.6rem;
+    left:-1rem;
     transform: translateY(30%);
     width:.4rem;
     height: 70%;
     background: var(--third);
+} */
+.mylist > .head .name::after{
+    content: '';
+    position:absolute;
+    left:-25%;
+    transform: translateY(40%);
+    
+    width:0;
+    height: 0;
+    border-top:3vh solid transparent;
+    border-bottom:3vh solid transparent;
+    border-left:3vh solid var(--third);
+    
+}
+
+@media (max-width:600px){
+    .mylist > .head .name::after{
+        border-top:2vh solid transparent;
+        border-bottom:2vh solid transparent;
+        border-left:2vh solid var(--third);
+    }
 }

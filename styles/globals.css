@@ -35,7 +35,8 @@ a {
  /* CAROUSEL */
 
  .carousel .slick-list{
-  height:max(55vh,20rem);
+   
+  height:max(45vh,25rem);
 }
   .slick-arrow.slick-prev,
   .slick-arrow.slick-next{

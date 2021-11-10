@@ -1,7 +1,6 @@
 import Layout from "../../components/Layout"
-import styles from '../../components/sections/home.module.css'
+import styles from '../../styles/Home.module.css'
 import Section2 from "../../components/sections/Section2"
-import MyList from "../../components/sections/MyList"
 import { useSelector } from "react-redux"
 import { useEffect } from "react"
 import { useRouter } from "next/router"
@@ -27,7 +26,6 @@ function Home() {
                         <button className={styles.ml}>my list</button>
                     </div> */}
                 </section>
-                <MyList />
                 <Section2 />
             </div>
         </div >

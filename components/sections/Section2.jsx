@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Carousel from '../carousel/Carousel'
 import axios from 'axios'
-import styles from './home.module.css'
+import styles from './section2.module.css'
 import { Loading } from '../loadings/Loading'
-export default function Section2() {
+import MyList from './MyList'
 
+export default function Section2() {
     return (
         <>
             <section className={styles.two}>
+                <MyList />
                 <Section name="popular" />
                 <Section name="action & Thriller" query={{ genres: ['Action', 'Thriller'] }} />
                 <Section name="romance & drama" query={{ genres: ['Romance', 'Drama'] }} />

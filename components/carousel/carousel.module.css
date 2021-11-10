@@ -1,16 +1,18 @@
 .m_carousel{
     margin:auto;
     width:90%;
+    height:max-content;
     padding:0 .5rem;
-
     animation: animate1 .8s ease 1;
+    /* border:1px solid red; */
 }
 @keyframes animate1{
   0%{opacity:0}
   100%{opacity: 1;}
 }
-.m_carousel .slick-list{
-  height:max(55vh,20rem);
+/* .m_carousel .slick-list{
+  height:100vh;
+  border:1px solid red;
 }
 .m_carousel .slick-arrow.slick-prev,
 .m_carousel .slick-arrow.slick-next{
@@ -19,10 +21,10 @@
 .m_carousel:hover .slick-arrow.slick-prev,
 .m_carousel:hover .slick-arrow.slick-next{
     opacity: 1 !important;
-}
+} */
  
  
-.m_carousel .slick-arrow.slick-prev::before{
+/* .m_carousel .slick-arrow.slick-prev::before{
   
     font-family: "Font Awesome 5 Free";
     content:'\f053';
@@ -40,8 +42,9 @@
     font-weight: 900;
     font-size: 2rem;
   }
-.m_carousel .wrapper{
-  padding: 1rem 0;
+ */
+ .m_carousel .wrapper{
+  padding: 10% 0;
 }
 
 
