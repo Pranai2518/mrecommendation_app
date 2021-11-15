@@ -8,6 +8,17 @@ import { logout } from '../redux/features/authSlice'
 import Brightness2Icon from '@mui/icons-material/Brightness2';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import LogoutIcon from '@mui/icons-material/Logout';
+import styled from 'styled-components'
+
+const Nav = styled.div.attrs(props => ({
+    className: props.active ? 'active' : ''
+}))`
+    background:${props => props.active ? 'var(--primary)' : ''};
+    box-shadow:${props => props.active ? '0px 1px 3px rgba(0,0,0,0.25) ' : ''};
+`
+const Sbar = styled.div`
+    background:${props => props.active ? 'rgba(255,255,255,.7) !important' : ''};
+`
 
 function Navbar() {
     const theme = useSelector((state) => state.theme.value)
@@ -28,6 +39,7 @@ function Navbar() {
     }
 
     const [toggle, setToggle] = useState()
+    const [toggleNav, setToggleNav] = useState(false)
     // useEffect(() => {
     //     const nav = document.querySelector('.navbar')
     //     if (toggleNav && (theme === 'light')) { nav.classList.add('toggle_light'); nav.classList.remove('toggle_dark') }
@@ -54,25 +66,31 @@ function Navbar() {
         router.push('/home', undefined, { shallow: true })
         setToggle(false)
     }
+    const changeBackground = () => {
+        if (window.scrollY >= 80) { setToggleNav(true) }
+        else { setToggleNav(false) }
+    }
     useEffect(() => {
         let s = window.localStorage.getItem('s-word')
         if (s) { wordRef.current.value = s; setToggle(true) }
         else { wordRef.current.value = ''; setToggle(false) }
         const t = window.localStorage.getItem('theme')
         if (t) dispatch(setTheme(t))
+        window.addEventListener('scroll', changeBackground)
+        return () => window.removeEventListener('scroll', changeBackground)
     }, [])
     return (
 
-        <div className={styles.navbar}>
+        <Nav className={styles.navbar} active={toggleNav}>
             <div className={styles.burger}>
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
-            <div className={styles.search_bar}>
+            <Sbar className={styles.search_bar} id='search_bar' active={toggleNav}>
                 <input type="text" placeholder='search movie' ref={wordRef} onChange={handleRoute} />
                 <button>{toggle ? <img onClick={handleIcon} src='/assets/x-mark-thin.png' alt='hh' style={{ cursor: 'pointer' }} /> : <img src='/assets/search-thin.png' alt='hh' />}</button>
-            </div>
+            </Sbar>
             <div className={styles.profile}>
                 <div className={styles.theme} onClick={handleTheme} >{theme === 'dark' ? <WbSunnyIcon /> : <Brightness2Icon />}</div>
                 {/* <div className={styles.name} >Hello <p>There!</p></div> */}
@@ -82,7 +100,7 @@ function Navbar() {
                 </div>
 
             </div>
-        </div>
+        </Nav>
 
     )
 }

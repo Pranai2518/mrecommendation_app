@@ -20,6 +20,7 @@
 }
 
 /* THEME */
+ 
 .navbar.sroute .search_bar{background: rgb(255, 255, 255);} 
 .navbar.toggle_dark{background: var(--primary);}
 .navbar.toggle_light{background: var(--primary);box-shadow: 0 1px 15px var(--button-shadow);}
@@ -115,16 +116,14 @@
     display: flex;
     gap:10%;
 }
-.navbar .profile .pic{
-    
-}
+ 
 .navbar .profile .pic img{
     display: grid;
     place-content:center; 
     width:3rem;
     height:3rem;
     border-radius: 5px;
-    
+    box-shadow: 0 0 5px 1px var(--card-shadow);
 }
 .navbar .profile .name{
     font-size: 1.4rem;
@@ -139,7 +138,7 @@
    cursor: pointer;
    color:var(--font-primary);
 }
-.navbar .profile .logout:hover{color:var(--font-secondary);}
+/* .navbar .profile .logout:hover{color:var(--font-secondary);} */
 
 
 

@@ -6,7 +6,6 @@ import Card from '../../components/card/Card'
 import { useRouter } from 'next/router'
 import { Loading } from '../../components/loadings/Loading'
 import { useSelector } from 'react-redux'
-import WithAuth from '../../hooks/WithAuth'
 
 function Search() {
     const router = useRouter()
