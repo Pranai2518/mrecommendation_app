@@ -42,7 +42,7 @@ function Search() {
             <div className={styles.container}>
                 {loading ? <Loading /> :
                     <>
-                        {ids?.length ?
+                        {ids?.length > 0 ?
                             <div className={styles.content}>
                                 {ids.map(id => (
                                     <Card id={id} key={id} size='medium' />

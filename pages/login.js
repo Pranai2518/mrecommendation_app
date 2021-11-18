@@ -1,15 +1,16 @@
 import { useEffect } from 'react'
 
+import styles from '../styles/Login.module.css'
 import { CircularProgress } from '@mui/material'
-import styled from 'styled-components'
+
 import { useSelector, useDispatch } from 'react-redux'
 import { loginWithGoogle } from '../redux/features/authSlice'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
+import { flexbox } from '@mui/system'
 
-const Log = styled.button`
-    font-size:2rem;
-    margin-top:10%;
-`
+
+
 export default function Login() {
     const router = useRouter()
     const dispatch = useDispatch()
@@ -21,13 +22,28 @@ export default function Login() {
     }, [access])
 
     return (
-        <div style={{ display: 'grid', placeItems: 'center' }}>
-            {loading1 !== 'loading' ?
-                <>
-                    <Log onClick={() => { dispatch(loginWithGoogle()) }} >Login</Log>
+        <div className={styles.container} >
+            {loading1 === 'loading' ?
+
+                <CircularProgress style={{ width: '100vw', marginTop: '25%', display: 'flex', justifyContent: 'center' }} color='primary' />
+                : <>
+                    <div className={styles.bg} >
+                        <Image priority layout='fill' objectPosition='65%' objectFit='cover' src='/assets/land1.png' />
+                    </div>
+                    <div className={styles.content}>
+                        <div className={styles.desc} >
+                            You won’t watch the movies the way you were in kid
+                        </div>
+                        <div className={styles.lbtn}>
+
+                            <button onClick={() => { dispatch(loginWithGoogle()) }}  >SignIn with Google</button>
+                        </div>
+
+                    </div>
                 </>
-                : <CircularProgress style={{ marginTop: '10%' }} color='primary' />
             }
+
+
         </div>
     )
 }
