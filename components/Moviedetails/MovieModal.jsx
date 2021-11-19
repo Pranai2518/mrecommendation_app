@@ -15,7 +15,8 @@ const boxStyle = {
     background: 'var(--font-secondary)',
     boxShadow: '0 0 5px var(--card-shadow)',
     borderRadius: '5px',
-    border: 'none'
+    border: 'none',
+    overflowY: 'auto !important'
 
 }
 
@@ -23,10 +24,12 @@ export default function MovieModal() {
     const dispatch = useDispatch()
     const open = useSelector(state => state.movie.open)
     const handleClose = () => dispatch(setOpen(false));
+
+    //facing renddering issues with this custom
     const customBackdrop = () => {
         return (
             <Backdrop
-                style={{ background: 'rgba(0,0,0,.7)' }}
+                sx={{ color: 'rgba(0,0,0,.7) !important' }}
                 open={open}
                 onClick={handleClose}
             ></Backdrop>
@@ -41,7 +44,7 @@ export default function MovieModal() {
                 open={open}
                 onClose={handleClose}
                 closeAfterTransition
-                BackdropComponent={customBackdrop}
+                BackdropComponent={Backdrop}
                 BackdropProps={{
                     timeout: 500,
                 }}

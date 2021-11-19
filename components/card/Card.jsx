@@ -37,7 +37,7 @@ export default function Card({ id, size }) {
 
     const [status, setStatus] = useState(false)
     const fix = async () => {
-        const mIfo = await moviesInfo.find(i => i.movieId === details.id)
+        const mIfo = await moviesInfo.find(i => i.movieId === details.imdbID)
         if (mIfo) { setInList(mIfo.myList) }
         else { setInList(false) }
         setStatus(false)
@@ -47,17 +47,7 @@ export default function Card({ id, size }) {
         await axios.get(`https://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_KEY}&i=${id}`, { signal: signal }, { headers: { 'Access-Control-Allow-Origin': '*' } })
             .then(data => {
                 const res = data.data
-                const obj = {
-                    id: id,
-                    title: res.Title,
-                    poster: res.Poster,
-                    runtime: res.Runtime,
-                    year: res.Year,
-                    rate: res.Rated,
-                    imdb: res.imdbRating
-                }
-                // console.log(obj)
-                setDetais(obj)
+                setDetais(res)
                 setLoading(false)
 
             })
@@ -77,7 +67,7 @@ export default function Card({ id, size }) {
     }, [])//eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        if (details?.id) fix()
+        if (details?.imdbID) fix()
     }, [moviesInfo, details])//eslint-disable-line react-hooks/exhaustive-deps
 
 
@@ -90,8 +80,8 @@ export default function Card({ id, size }) {
         setStatus(true)
         var obj = {
             uid: uid,
-            movieId: details.id,
-            title: details.title,
+            movieId: details.imdbID,
+            title: details.Title,
             rating: '',
             watched: false,
             myList: true,
@@ -111,8 +101,8 @@ export default function Card({ id, size }) {
         // const mIfo = moviesInfo.find(i => i.movieId === id)
         // if (mIfo.rating === '' && !mIfo.watched) {
         // console.log(`deleted:${details.id}`);
-        console.log(`deleting:${details.title}`);
-        dispatch(deleteMovieData({ uid, mid: details.id }))
+        console.log(`deleting:${details.Title}`);
+        dispatch(deleteMovieData({ uid, mid: details.imdbID }))
 
         // setTimeout(() => { fix() }, 1000)
         // }
@@ -120,12 +110,12 @@ export default function Card({ id, size }) {
     return (
         <MCard className={styles.m_card} size={size}>
             {!loading && details ? <>
-                <div className={styles.image} onClick={() => { dispatch(setMovieId({ t: details.title, i: details.id })); dispatch(setOpen(true)); }}>
-                    <Image objectFit='cover' layout='fill' className={styles.poster} src={details.poster} priority alt="name1" />
+                <div className={styles.image} onClick={() => { dispatch(setMovieId(details)); dispatch(setOpen(true)); }}>
+                    <Image objectFit='cover' layout='fill' className={styles.poster} src={details.Poster} priority alt="name1" />
                 </div>
 
                 <div className={styles.top}>
-                    <div className={styles.imdb}>{details.imdb}</div>
+                    <div className={styles.imdb}>{details.imdbRating}</div>
                     <div className={styles.options} >
                         {!status ? <>
                             {inList ?
@@ -136,13 +126,13 @@ export default function Card({ id, size }) {
                 </div>
 
                 <div className={styles.info}>
-                    <div className={styles.title}>{details.title}</div>
+                    <div className={styles.title}>{details.Title}</div>
                     <div className={styles.more}>
-                        <div className={styles.durt}>{details.runtime}</div>
+                        <div className={styles.durt}>{details.Runtime}</div>
                         <span></span>
-                        <div className={styles.rate}>{details.rate}</div>
+                        <div className={styles.rate}>{details.Rated}</div>
                         <span></span>
-                        <div className={styles.year}>{details.year}</div>
+                        <div className={styles.year}>{details.Year}</div>
                     </div>
                 </div>
                 {/* <div className="details">View</div> */}

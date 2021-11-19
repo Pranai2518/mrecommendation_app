@@ -9,7 +9,7 @@ const Div = styled.div.attrs(props => ({
     className: 'carousel'
 }))``
 
-export default function Carousel({ list }) {
+export default function Carousel({ list, size }) {
     const settings = {
         dots: false,
         speed: 500,
@@ -69,7 +69,7 @@ export default function Carousel({ list }) {
         <Div className={styles.m_carousel}>
             <Slider {...settings} >
                 {list?.map(i => (
-                    <div className={styles.wrapper} key={v4()}><Card id={i} style={{ margin: 'auto' }} size='large' /></div>
+                    <div className={styles.wrapper} key={v4()}><Card id={i} style={{ margin: 'auto' }} size={size ? size : 'large'} /></div>
                 ))}
             </Slider>
         </Div>

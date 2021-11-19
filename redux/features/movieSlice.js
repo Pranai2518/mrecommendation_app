@@ -8,9 +8,17 @@ export const getMovie = createAsyncThunk('movie/getMovie', async ({ uid, mid }) 
     return data
 })
 
+export const getRecomendations = createAsyncThunk('movie/contentBased', async ({ id }) => {
+    var data
+    await axios.get(`${process.env.NEXT_PUBLIC_SERVER}/recommend?method=cb&id=${id}`)
+        .then(res => data = res.data)
+    return data
+})
+
 const initialState = {
-    id: '',
-    details: [],
+    details: {},
+    more: {},
+    recommends: [],
     open: false,
     status: 'idle'
 }
@@ -23,13 +31,21 @@ const movie = createSlice({
             state.open = action.payload
         },
         setMovieId: (state, action) => {
-            state.id = action.payload
+
+            state.details = action.payload
         }
     },
     extraReducers(builder) {
         builder
             .addCase(getMovie.fulfilled, (state, action) => {
-                state.details = action.payload
+                state.more = action.payload
+                state.status = 'succeeded'
+            })
+            .addCase(getRecomendations.pending, (state, action) => {
+                state.status = 'loading'
+            })
+            .addCase(getRecomendations.fulfilled, (state, action) => {
+                state.recommends = action.payload.recommends
                 state.status = 'succeeded'
             })
     }

@@ -1,0 +1,104 @@
+.movie{
+    --card-width:12rem;
+    --card-height:17rem;
+    position: relative;
+    padding: 1.5rem;
+   
+}
+
+
+/* MOVIE DETAILS */
+.mov_details{
+    /* border:1px solid red; */
+    display: flex;
+    /* flex-wrap: wrap; */
+    gap:1rem;
+    align-items: center;
+
+}
+.movie .main_img{
+    width: var(--card-width); 
+    height: var(--card-height);
+    object-fit: cover;
+    object-position: 50% 50%;
+    box-shadow: 0px 1px 5px var(--card-shadow);
+}
+.movie .movie_info{
+    flex:2;
+}
+.movie .movie_info .genres{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.movie .movie_info h1{
+    font-size: 2rem;
+    font-weight: bold;
+    margin: -1% 0% -1% 0%;
+}
+.movie .movie_info .yr{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+.movie .movie_info .yr h3{
+    font-size: 0.95rem;
+    background-color: blueviolet;
+    padding: 0.1rem 0.3rem 0.1rem 0.3rem;
+    color: var(--font-secondary);
+}
+.movie .movie_info .desc
+{
+    width: 50vw;
+    height: 4.1rem;
+    overflow: auto;
+    font-size: 1rem;
+}
+ 
+
+/* SIMILAR MOVIES */
+.movie .similar{
+    display: flex;
+    flex-direction: column;
+}
+.movie .similar p{
+    font-size: 1.5rem;
+    margin-top: 1rem !important; 
+    margin: 0;
+}
+ 
+.movie .icons{
+    flex:.2;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.movie .icons i{
+    font-size: 1.5rem;
+    background-color: var(--font-primary);
+    color: var(--font-secondary);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    line-height: 3rem;
+    cursor: pointer;
+}
+.movie .icons i:hover{
+    background-color: var(--secondary);
+    color: var(----font-primary);
+    font-size: 1.7rem;
+}
+.movie .cbtn
+{
+    background: none;
+    position: absolute;
+    top: 3%;
+    left: 96%;
+    font-size: 2rem;
+    color: var(--font-primary);
+    border: none;
+    cursor: pointer;
+}

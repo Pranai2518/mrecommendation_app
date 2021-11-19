@@ -49,6 +49,7 @@
 
     opacity: 1;
     transition: opacity .5s ease;
+    cursor: pointer;
 }
 .m_card .image::before{opacity: 0;}
 
@@ -147,8 +148,7 @@
     width:100%;
     
     color: white;
-    text-transform: capitalize;
-     
+    text-transform: capitalize;  
 }
 
 .m_card .info .title{
@@ -184,8 +184,8 @@
   
 }
 
-.m_card.small .title{ font-size: clamp(.6rem,10vw,1.2rem);}
-.m_card.small .more{ font-size: clamp(.3rem,5vw,.75rem)}
+/* .m_card.small .title{ font-size: clamp(.5rem,5vw,1.2rem);}
+.m_card.small .more{ font-size: clamp(.3rem,5vw,.75rem)} */
 
 /* 
 600px
