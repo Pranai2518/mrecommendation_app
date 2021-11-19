@@ -16,27 +16,19 @@ a {
   box-sizing: border-box;
 }
 
-/* CARD */
-/* .c_large{
-  --card-width:15rem !important;
-  --card-height:22rem !important;
-}
-.c_medium{
-  --card-width:12rem;
-  --card-height:18rem;
-}
-.c_small{
-  --card-width:10rem;
-  --card-height:15rem;
-} */
+ 
 
  .content .m_card{margin:.5rem}
 
  /* CAROUSEL */
 
- .carousel .slick-list{
+ .carousel.small .slick-list{
+   width:100%;
    
-  height:max(45vh,25rem);
+   }
+ .carousel .slick-list{
+   margin-left: 1%;
+  height:max-content;
 }
   .slick-arrow.slick-prev,
   .slick-arrow.slick-next{
@@ -46,7 +38,6 @@ a {
 .carousel:hover .slick-arrow.slick-next{
     opacity: 1 !important;
 }
- 
  
 .carousel .slick-arrow.slick-prev::before{
   

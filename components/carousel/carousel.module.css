@@ -6,6 +6,7 @@
     animation: animate1 .8s ease 1;
     /* border:1px solid red; */
 }
+ 
 @keyframes animate1{
   0%{opacity:0}
   100%{opacity: 1;}

@@ -17,7 +17,8 @@
 .search_m .content{
     
     margin-top: max(4rem,6%);
-    padding: 0rem 2%;
+    padding: 0 2%;
+    padding-bottom: 1rem !important;
      
     display: grid;
     place-items: center;

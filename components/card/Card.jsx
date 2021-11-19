@@ -24,7 +24,6 @@ const MCard = styled.div`
     --card-height:15rem;
     `}
 `
-
 export default function Card({ id, size }) {
     const [details, setDetais] = useState()
     const [loading, setLoading] = useState(true)
@@ -44,7 +43,9 @@ export default function Card({ id, size }) {
     }
     const fetchMovie = async (signal) => {
         setLoading(true)
-        await axios.get(`https://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_KEY}&i=${id}`, { signal: signal }, { headers: { 'Access-Control-Allow-Origin': '*' } })
+        await axios.get(`https://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_KEY}&i=${id}`,
+            { signal: signal },
+            { headers: { 'Access-Control-Allow-Origin': `${process.env.NEXT_PUBLIC_URL}`, 'Access-Control-Allow-Credentials': true } })
             .then(data => {
                 const res = data.data
                 setDetais(res)
@@ -126,8 +127,8 @@ export default function Card({ id, size }) {
                 </div>
 
                 <div className={styles.info}>
-                    <div className={styles.title}>{details.Title}</div>
-                    <div className={styles.more}>
+                    <div className={styles.title} style={{ fontSize: size === 'small' ? 'clamp(.8rem,5vw,1.1rem)' : '', }} >{details.Title}</div>
+                    <div className={styles.more} style={{ fontSize: size === 'small' ? 'clamp(.8rem,5vw,.8rem)' : '', }}>
                         <div className={styles.durt}>{details.Runtime}</div>
                         <span></span>
                         <div className={styles.rate}>{details.Rated}</div>

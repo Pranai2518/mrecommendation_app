@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setOpen, getRecomendations } from '../../redux/features/movieSlice';
 import styles from './samp.module.css'
 import Carousel from '../carousel/Carousel';
-
+import { Loading } from '../loadings/Loading'
 export default function Movie() {
     const status = useSelector(state => state.movie.status)
     const info = useSelector(state => state.movie)
@@ -25,9 +25,11 @@ export default function Movie() {
                             <h1>{info.details.Title}</h1>
                             <div className={styles.yr}>
                                 <h3>{info.details.Year}</h3>
-                                <p>{info.details.imdbRating}</p>
+                                <p>Imdb: {info.details.imdbRating}</p>
                             </div>
                             <p className={styles.desc}>{info.details.Plot}</p>
+                            <div className={styles.actors}>Actors: {info.details.Actors}</div>
+                            <div className={styles.actors}>Director(s): {info.details.Director}</div>
                         </div>
                         <div className={styles.icons}>
                             <i className="far fa-thumbs-up"></i>
@@ -40,7 +42,7 @@ export default function Movie() {
                         <div className={styles.similar}>
                             <p>Similar Movies</p>
                             <Carousel list={recommends?.map(i => i.imdbId)} size='small' />
-                        </div> : 'loading...'}
+                        </div> : <div style={{ marginTop: '5%', display: 'grid', placeItems: 'center' }} ><Loading /></div>}
 
                     <button className={styles.cbtn} style={{ background: 'none', color: 'var(--font-primary)' }} onClick={() => dispatch(setOpen(false))}>
                         <i className="fas fa-times"></i></button>

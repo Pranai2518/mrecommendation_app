@@ -6,8 +6,9 @@ import { v4 } from 'uuid'
 import styled from 'styled-components'
 
 const Div = styled.div.attrs(props => ({
-    className: 'carousel'
-}))``
+    className: `carousel ${props.size}`
+}))`
+`
 
 export default function Carousel({ list, size }) {
     const settings = {
@@ -66,7 +67,7 @@ export default function Carousel({ list, size }) {
     }
     return (
 
-        <Div className={styles.m_carousel}>
+        <Div className={styles.m_carousel} size={size}>
             <Slider {...settings} >
                 {list?.map(i => (
                     <div className={styles.wrapper} key={v4()}><Card id={i} style={{ margin: 'auto' }} size={size ? size : 'large'} /></div>

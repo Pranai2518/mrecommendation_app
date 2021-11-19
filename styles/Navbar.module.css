@@ -30,6 +30,7 @@
 
 /* BURGER */
 .navbar .burger{
+    opacity: 0;
     margin-left: 5%;
     /* text-align: left; */
     position: relative;
