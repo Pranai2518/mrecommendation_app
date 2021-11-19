@@ -43,3 +43,19 @@
  
 }
 .content .lbtn button:active{transform: scale(.97);transform-origin: right bottom;}
+
+
+/* LOADING STATE */
+.loading{
+    position: absolute;
+    inset:0;
+
+    background:hsl(0,0%,0%,.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:1rem;
+}
+.loading .status{
+    color: white;
+}

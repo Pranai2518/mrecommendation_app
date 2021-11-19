@@ -1,13 +1,11 @@
 import { useEffect } from 'react'
 
 import styles from '../styles/Login.module.css'
-import { CircularProgress } from '@mui/material'
-
 import { useSelector, useDispatch } from 'react-redux'
 import { loginWithGoogle } from '../redux/features/authSlice'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { flexbox } from '@mui/system'
+import { Loading } from '../components/loadings/Loading'
 
 
 
@@ -24,8 +22,11 @@ export default function Login() {
     return (
         <div className={styles.container} >
             {loading1 === 'loading' ?
+                <div className={styles.loading} >
 
-                <CircularProgress style={{ width: '100vw', marginTop: '25%', display: 'flex', justifyContent: 'center' }} color='primary' />
+                    <Loading />
+                    <div className={styles.status} >Loading please wait..</div>
+                </div>
                 : <>
                     <div className={styles.bg} >
                         <Image priority layout='fill' objectPosition='65%' objectFit='cover' src='/assets/land1.png' />
@@ -35,7 +36,6 @@ export default function Login() {
                             You won’t watch the movies the way you were in kid
                         </div>
                         <div className={styles.lbtn}>
-
                             <button onClick={() => { dispatch(loginWithGoogle()) }}  >SignIn with Google</button>
                         </div>
 
