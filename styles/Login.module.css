@@ -46,9 +46,9 @@
 
 
 /* LOADING STATE */
-.loading{
+.load{
     position: absolute;
-    inset:0;
+    inset: 0;
 
     background:hsl(0,0%,0%,.9);
     display: flex;
@@ -56,6 +56,6 @@
     align-items: center;
     gap:1rem;
 }
-.loading .status{
+.status{
     color: white;
 }
