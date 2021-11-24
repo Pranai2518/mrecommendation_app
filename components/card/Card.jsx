@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useLayoutEffect, useEffect } from 'react'
 import styles from './card.module.css'
 import axios from 'axios'
 import styled from 'styled-components'

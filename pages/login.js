@@ -6,7 +6,6 @@ import { loginWithGoogle } from '../redux/features/authSlice'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { Loading } from '../components/loadings/Loading'
-import { CircularProgress } from '@mui/material'
 
 
 
@@ -17,19 +16,19 @@ export default function Login() {
     const access = useSelector(state => state.currentUser.user.authenticated)
     useEffect(() => {
         // console.log(`login:${access}`)
-        if (access) router.push('/home', undefined, { shallow: true })
+        if (access) router.replace('/home', undefined, { shallow: true })
     }, [access])
 
     return (
         <div className={styles.container} >
             {loading1 === 'loading' ?
-                <div className={styles.load} >
+                <div className={styles.l_loader} >
                     <Loading />
                     <div className={styles.status} >Loading please wait..</div>
                 </div>
                 : <>
                     <div className={styles.bg} >
-                        <Image priority layout='fill' objectPosition='65%' objectFit='cover' src='/assets/land1.png' />
+                        <Image priority alt='bgimg1' layout='fill' objectPosition='65%' objectFit='cover' src='/assets/land1.png' />
                     </div>
                     <div className={styles.content}>
                         <div className={styles.desc} >
@@ -42,8 +41,6 @@ export default function Login() {
                     </div>
                 </>
             }
-
-
         </div>
     )
 }
