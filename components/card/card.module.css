@@ -155,7 +155,7 @@
     width:90%;
     margin-bottom: .3rem;
     font-weight: 600;
-    font-size: clamp(1.5rem,5vw,1.8rem);
+    font-size: clamp(1.5rem,5vw,1.6rem);
 }
 .m_card .info .more{
     width:100%;

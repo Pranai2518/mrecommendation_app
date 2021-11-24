@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './card.module.css'
 import axios from 'axios'
 import styled from 'styled-components'
@@ -10,7 +10,9 @@ import { addMovieData, deleteMovieData } from '../../redux/features/userDataSlic
 // import { fetchMovies } from '../../redux/features/userDataSlice'
 import { setOpen, setMovieId } from '../../redux/features/movieSlice'
 
-const MCard = styled.div`
+const MCard = styled.div.attrs((props) => ({
+    className: `m_card ${props.size}`
+}))`
     ${props => props.size === 'large' && `
     --card-width:15rem;
     --card-height:22rem;
@@ -87,7 +89,7 @@ export default function Card({ id, size }) {
             watched: false,
             myList: true,
         }
-        console.log(`added:${obj.title}`);
+        // console.log(`added:${obj.title}`);
         dispatch(addMovieData(obj))
 
         // setTimeout(() => { fix() }, 1000)
@@ -102,7 +104,7 @@ export default function Card({ id, size }) {
         // const mIfo = moviesInfo.find(i => i.movieId === id)
         // if (mIfo.rating === '' && !mIfo.watched) {
         // console.log(`deleted:${details.id}`);
-        console.log(`deleting:${details.Title}`);
+        // console.log(`deleting:${details.Title}`);
         dispatch(deleteMovieData({ uid, mid: details.imdbID }))
 
         // setTimeout(() => { fix() }, 1000)
@@ -127,8 +129,8 @@ export default function Card({ id, size }) {
                 </div>
 
                 <div className={styles.info}>
-                    <div className={styles.title} style={{ fontSize: size === 'small' ? 'clamp(.8rem,5vw,1.1rem)' : '', }} >{details.Title}</div>
-                    <div className={styles.more} style={{ fontSize: size === 'small' ? 'clamp(.8rem,5vw,.8rem)' : '', }}>
+                    <div className={styles.title} id='card_title' >{details.Title}</div>
+                    <div className={styles.more} id='card_more' >
                         <div className={styles.durt}>{details.Runtime}</div>
                         <span></span>
                         <div className={styles.rate}>{details.Rated}</div>

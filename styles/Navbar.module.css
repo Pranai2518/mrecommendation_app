@@ -151,10 +151,17 @@
         align-items: left;
          
     }
+    .navbar .profile .user{
+        margin-left:10%;
+    }
     .navbar .profile{
+        background: var(--primary);
+        padding: .2rem;
+        width:45%;
         position: absolute;
-        bottom: -60%;
+        bottom: -80%;
         right: 6%;
+        gap:.5rem;
     }
     .navbar .profile .name{display: none;}
 }

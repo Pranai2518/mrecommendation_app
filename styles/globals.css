@@ -19,16 +19,24 @@ a {
  
 
  .content .m_card{margin:.5rem}
+ 
+ /* MOVIE CARD */
+  .m_card.medium #card_title{font-size: clamp(.8rem,5vw,1.25rem);}
+  .m_card.medium #card_more{font-size: clamp(.8rem,5vw,.9rem);}
 
- /* CAROUSEL */
+  .m_card.small #card_title{font-size: clamp(.8rem,5vw,1.1rem);}
+  .m_card.small #card_more{font-size: clamp(.8rem,5vw,.8rem);}
 
+ 
+ 
+  /* CAROUSEL */
  .carousel.small .slick-list{
    width:100%;
    
    }
  .carousel .slick-list{
    margin-left: 1%;
-  height:max-content;
+   height:max-content;
 }
   .slick-arrow.slick-prev,
   .slick-arrow.slick-next{
