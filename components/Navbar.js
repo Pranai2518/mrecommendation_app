@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import styles from '../styles/Navbar.module.css'
 import { useDispatch, useSelector } from 'react-redux'
@@ -70,7 +70,7 @@ function Navbar() {
         if (window.scrollY >= 80) { setToggleNav(true) }
         else { setToggleNav(false) }
     }
-    useLayoutEffect(() => {
+    useEffect(() => {
         let s = window.localStorage.getItem('s-word')
         if (s) { wordRef.current.value = s; setToggle(true) }
         else { wordRef.current.value = ''; setToggle(false) }
