@@ -15,7 +15,7 @@ export default function MyList() {
                 <div className={styles.mylist} >
                     <div className={styles.head}><div className={styles.name}>mylist</div></div>
                     {status === 'listLoaded' ?
-                        <Carousel list={list?.map(i => i.movieId)} />
+                        <Carousel list={Array.from(list).reverse()?.map(i => i.movieId)} />
                         : <div style={{ height: 'min(50vh,30rem)', display: 'grid', placeItems: 'center', alignItems: 'center' }} ><Loading /></div>}
                 </div >
 
