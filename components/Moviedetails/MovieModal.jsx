@@ -1,24 +1,10 @@
 import { Backdrop, Modal, Fade, Box } from '@mui/material';
 import Movie from './Movie';
+import styles from './movieModal.module.css'
 
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 import { setOpen } from '../../redux/features/movieSlice';
-
-const boxStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    height: '90vh',
-    width: '80vw',
-    background: 'var(--font-secondary)',
-    boxShadow: '0 0 5px var(--card-shadow)',
-    borderRadius: '5px',
-    border: 'none',
-    overflowY: 'auto !important'
-
-}
 
 export default function MovieModal() {
     const dispatch = useDispatch()
@@ -50,7 +36,7 @@ export default function MovieModal() {
                 }}
             >
                 <Fade in={open}>
-                    <Box style={boxStyle}>
+                    <Box className={styles.box}>
                         <Movie />
                     </Box>
                 </Fade>

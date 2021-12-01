@@ -45,6 +45,37 @@ export default function Card({ id, size }) {
     }
     const fetchMovie = async (signal) => {
         setLoading(true)
+        // var options = {
+        //     method: 'GET',
+        //     url: `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${id}`,
+        //     headers: {
+        //         'x-rapidapi-host': 'imdb-internet-movie-database-unofficial.p.rapidapi.com',
+        //         'x-rapidapi-key': '9f308b0b1emsh5b18f79da1aa341p1a6289jsnbb369dd16452'
+        //     },
+        //     signal: signal,
+
+        // };
+        // await axios.request(options)
+        //     .then(res => {
+        //         var info = res.data
+        //         var obj = {
+        //             imdbID: info.id,
+        //             imdbRating: info.rating,
+        //             Title: info.title,
+        //             Plot: info.plot,
+        //             Poster: info.poster,
+        //             Year: info.year,
+        //             Runtime: info.length,
+        //             Rated: 'none',
+        //             Actors: 'none',
+        //             Director: 'none'
+        //         }
+        //         setDetais(obj)
+        //         setLoading(false)
+        //     })
+        //     .catch(err => { console.log(err) })
+
+
         await axios.get(`https://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_KEY}&i=${id}`,
             { signal: signal },
             { headers: { 'Access-Control-Allow-Origin': `${process.env.NEXT_PUBLIC_URL}`, 'Access-Control-Allow-Credentials': true } })
@@ -122,7 +153,7 @@ export default function Card({ id, size }) {
                     <div className={styles.options} >
                         {!status ? <>
                             {inList ?
-                                <div className={styles.tooltip} onClick={handleDelete} data-title='added' ><img src='/assets/checkbox.png' alt="tick" /></div> :
+                                <div className={styles.tooltip} onClick={handleDelete} data-title='remove from list' ><img src='/assets/x-mark.png' alt="tick" /></div> :
                                 <div className={styles.tooltip} onClick={handleAdd} data-title='add to list'><img src='/assets/plus-circle-thin.png' alt="add" /></div>}
                         </> : <div className={styles.spin}></div>}
                     </div>

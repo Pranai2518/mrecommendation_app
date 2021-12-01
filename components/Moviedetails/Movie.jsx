@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { setOpen, getRecomendations } from '../../redux/features/movieSlice';
-import styles from './samp.module.css'
+import styles from './movie.module.css'
 import Carousel from '../carousel/Carousel';
 import { Loading } from '../loadings/Loading'
+
 export default function Movie() {
     const status = useSelector(state => state.movie.status)
     const info = useSelector(state => state.movie)
     const recommends = useSelector(state => state.movie.recommends)
     const dispatch = useDispatch()
+    const [menuToggle, setMenuToggle] = useState(false)
     useEffect(() => {
         dispatch(getRecomendations({ id: info.details.imdbID }))
     }, [info.details])
@@ -28,20 +30,32 @@ export default function Movie() {
                                 <p>Imdb: {info.details.imdbRating}</p>
                             </div>
                             <p className={styles.desc}>{info.details.Plot}</p>
-                            <div className={styles.actors}>Actors: {info.details.Actors}</div>
-                            <div className={styles.actors}>Director(s): {info.details.Director}</div>
+                            {/* <div className={styles.actors}>Actors: {info.details.Actors}</div>
+                            <div className={styles.actors}>Director(s): {info.details.Director}</div> */}
                         </div>
                         <div className={styles.icons}>
-                            <i className="far fa-thumbs-up"></i>
-                            <i className="far fa-thumbs-down"></i>
-                            <i className="fas fa-eye-slash"></i>
-                            <i className="far fa-bookmark"></i>
+                            <i style={{ opacity: menuToggle ? '.5' : '' }} className="far fa-thumbs-up"></i>
+                            <i style={{ opacity: menuToggle ? '.5' : '' }} className="far fa-thumbs-down"></i>
+                            {!menuToggle ?
+                                <i style={{ opacity: !menuToggle ? '.5' : '' }} className="fas fa-eye-slash"></i> :
+                                <i style={{ opacity: !menuToggle ? '.5' : '' }} className="fas fa-eye"></i>}
+                            <i style={{ opacity: menuToggle ? '.5' : '' }} className="far fa-bookmark"></i>
                         </div>
                     </div>
                     {status === 'succeeded' ?
-                        <div className={styles.similar}>
-                            <p>Similar Movies</p>
-                            <Carousel list={recommends?.map(i => i.imdbId)} size='small' />
+                        <div className={styles.more_section}>
+                            <div className={styles.menus}>
+                                <div onClick={() => setMenuToggle(!menuToggle)}
+                                    className={styles.menu}
+                                    style={{ opacity: menuToggle ? '.5' : '' }}>you may like this</div>
+
+                                <div onClick={() => setMenuToggle(!menuToggle)} className={styles.menu}
+                                    style={{ opacity: !menuToggle ? '.5' : '' }}>cast & crew</div>
+                            </div>
+                            <div className={styles.selected_content}>
+                                {!menuToggle ?
+                                    <Carousel className={styles.carousel1} list={recommends?.map(i => i.imdbId)} size='small' /> : ''}
+                            </div>
                         </div> : <div style={{ marginTop: '5%', display: 'grid', placeItems: 'center' }} ><Loading /></div>}
 
                     <button className={styles.cbtn} style={{ background: 'none', color: 'var(--font-primary)' }} onClick={() => dispatch(setOpen(false))}>

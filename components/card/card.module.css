@@ -93,9 +93,9 @@
     top:10%;
     right:150%;
   
-    width:max-content;
-    height:1.4rem;
-    padding: 0 15%;
+    width:5rem;
+    overflow-wrap: break-word;
+    padding: 5% 15%;
     border-radius: 0 5px 5px 0;
     background: white;
     color: black;
