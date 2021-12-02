@@ -24,8 +24,11 @@
     width:max-content;
    
     font-weight: 300;
+    text-transform: capitalize;
     font-size: clamp(2rem,5vw,3rem);
     color: var(--font-primary);
+    border-left: .5rem solid var(--secondary);
+    line-height: 80%;
 }
  
 .c_section > .head .name{
@@ -33,15 +36,15 @@
     left:.4rem;
     bottom: 0;
 }
-.c_section > .head .name::before{
+/* .c_section > .head .name::before{
     content: '';
     position: absolute;
     left:-.6rem;
     transform: translateY(30%);
     width:.4rem;
     height: 70%;
-    background: var(--third);
-}
+    background: var(--secondary);
+} */
 
 
 

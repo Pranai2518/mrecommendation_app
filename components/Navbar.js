@@ -17,7 +17,7 @@ const Nav = styled.div.attrs(props => ({
     box-shadow:${props => props.active ? '0px 1px 3px rgba(0,0,0,0.25) ' : ''};
 `
 const Sbar = styled.div`
-    background:${props => props.active ? 'rgba(255,255,255,.7) !important' : ''};
+    background:${props => props.active ? 'rgba(255,255,255,.95) !important' : ''};
 `
 
 function Navbar() {

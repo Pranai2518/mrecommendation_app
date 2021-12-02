@@ -17,9 +17,12 @@ function Search() {
 
     const getAllIds = async (signal) => {
         await axios.get(`${process.env.NEXT_PUBLIC_SERVER}/search/${word}`, { signal: signal })
-            .then(data => setIds(data.data.result))
+            .then(data => {
+                setIds(data.data.result)
+                setLoading(false)
+            })
             .catch(err => console.log(err))
-        setLoading(false)
+
     }
 
     useEffect(() => {
@@ -40,7 +43,8 @@ function Search() {
 
         <div className={styles.search_m} >
             <div className={styles.container}>
-                {loading ? <Loading /> :
+
+                {loading ? <div className={styles.load_bars} ><Loading /></div> :
                     <>
                         {ids?.length > 0 ?
                             <div className={styles.content}>
@@ -48,7 +52,7 @@ function Search() {
                                     <Card id={id} key={id} size='medium' />
                                 ))}
                             </div>
-                            : <div style={{ display: 'grid', placeItems: 'center', paddingTop: '20%' }}> <h1>No Matches</h1></div>}
+                            : <div className={styles.msg} > <h1>No Matches</h1></div>}
                     </>}
             </div>
         </div>

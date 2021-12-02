@@ -15,6 +15,8 @@ body{
      font-family:'Open sans',sans-serif;
 
      --card-shadow:${({ theme }) => theme.cardShadow};
-     --button-shadow:${({ theme }) => theme.buttonShadow}
+     --button-shadow:${({ theme }) => theme.buttonShadow};
+
+     --modal-color:${({ theme }) => theme.modal}
 }
 `

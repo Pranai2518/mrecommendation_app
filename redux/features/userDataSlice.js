@@ -8,7 +8,6 @@ export const addMovieData = createAsyncThunk('userData/addMovie', async (obj, th
         .then(res => data = res.data)
         .catch(err => console.log(err))
     return data
-
 })
 //delete userMovie data
 export const deleteMovieData = createAsyncThunk('userData/deleteMovie', async ({ uid, mid }, thunkAPI) => {
@@ -20,11 +19,10 @@ export const deleteMovieData = createAsyncThunk('userData/deleteMovie', async ({
 })
 
 //update userMovie data
-export const updateMovieData = createAsyncThunk('userData/updateMovie', async (uid) => {
-    var data
-    await axios.get(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/${uid}/movies`)
-        .then(res => data = res.data)
-    return data
+export const updateMovieData = createAsyncThunk('userData/updateMovie', async ({ uid, mid, data }) => {
+
+    await axios.put(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/${uid}/movie/${mid}`, data)
+        .catch(err => console.log(err))
 })
 
 //fetch movie
@@ -80,6 +78,14 @@ const userData = createSlice({
                 state.status = 'loading'
             })
             .addCase(deleteMovieData.fulfilled, (state, action) => {
+                // const movies = await state.movies.filter(i => i.movieId !== action.payload.movieId)
+                // state.movies = movies
+                state.status = 'succeeded'
+            })
+            .addCase(updateMovieData.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(updateMovieData.fulfilled, (state, action) => {
                 // const movies = await state.movies.filter(i => i.movieId !== action.payload.movieId)
                 // state.movies = movies
                 state.status = 'succeeded'

@@ -6,7 +6,7 @@ import { Skeleton } from '@mui/material'
 import Image from 'next/image'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { addMovieData, deleteMovieData } from '../../redux/features/userDataSlice'
+import { addMovieData, deleteMovieData, updateMovieData } from '../../redux/features/userDataSlice'
 // import { fetchMovies } from '../../redux/features/userDataSlice'
 import { setOpen, setMovieId } from '../../redux/features/movieSlice'
 
@@ -107,39 +107,31 @@ export default function Card({ id, size }) {
 
 
     const handleAdd = () => {
-        // setInList(!inList)
-        // setTimeout(() => {
-        //     setInList(!inList)
-        // }, 200)
+
         setStatus(true)
         var obj = {
             uid: uid,
             movieId: details.imdbID,
             title: details.Title,
-            rating: '',
+            liked: 0,
             watched: false,
             myList: true,
         }
+        const mIfo = moviesInfo.find(i => i.movieId === details.imdbID)
+        if (!mIfo) dispatch(addMovieData(obj))
+        else dispatch(updateMovieData({ uid, mid: details.imdbID, data: { ...mIfo, myList: true } }))
         // console.log(`added:${obj.title}`);
-        dispatch(addMovieData(obj))
+
 
         // setTimeout(() => { fix() }, 1000)
 
     }
-    const handleDelete = () => {
+    const handleDelete = async () => {
         setStatus(true)
-        // setInList(!inList)
-        // setTimeout(() => {
-        //     setInList(!inList)
-        // }, 200)
-        // const mIfo = moviesInfo.find(i => i.movieId === id)
-        // if (mIfo.rating === '' && !mIfo.watched) {
-        // console.log(`deleted:${details.id}`);
-        // console.log(`deleting:${details.Title}`);
-        dispatch(deleteMovieData({ uid, mid: details.imdbID }))
-
-        // setTimeout(() => { fix() }, 1000)
-        // }
+        const mIfo = await moviesInfo.find(i => i.movieId === details.imdbID)
+        if (mIfo.liked === 0 && !mIfo.watched)
+            dispatch(deleteMovieData({ uid, mid: details.imdbID }))
+        else dispatch(updateMovieData({ uid, mid: details.imdbID, data: { ...mIfo, myList: false } }))
     }
     return (
         <MCard className={styles.m_card} size={size}>

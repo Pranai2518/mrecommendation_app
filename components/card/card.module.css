@@ -29,14 +29,12 @@
 }
 /* .m_card:hover{box-shadow: none;} */
 .m_card .image{
-    position: relative !important;
+    position: relative;
     width:var(--card-width);
     height:var(--card-height);
 }
-/* .m_card .image .poster{
-    
-    z-index:1;
-    
+/* .m_card .image .poster{ 
+    z-index:1; 
     border-radius: var(--radius);
 } */
 .m_card:hover .image::before{
@@ -71,9 +69,20 @@
     text-transform: capitalize;
 }
 .m_card .top .imdb{
-    padding: .3rem;
-    background: var(--third);
+   position: relative;
+    background: black;
+    /* background: var(--secondary); */
     border-radius: 25px;
+    padding: 3%;
+}
+.m_card .top .imdb::after{
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: scale(1.1);
+    border-radius: 25px;
+    background: linear-gradient(180deg,var(--secondary),var(--third) 100%);
 }
  
 .m_card .top .options img{

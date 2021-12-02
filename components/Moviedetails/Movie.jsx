@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { setOpen, getRecomendations } from '../../redux/features/movieSlice';
+import { setOpen, getRecomendations, getMovieInfo } from '../../redux/features/movieSlice';
+import { updateMovieData, deleteMovieData, addMovieData } from '../../redux/features/userDataSlice'
 import styles from './movie.module.css'
 import Carousel from '../carousel/Carousel';
 import { Loading } from '../loadings/Loading'
@@ -14,6 +15,7 @@ export default function Movie() {
     useEffect(() => {
         dispatch(getRecomendations({ id: info.details.imdbID }))
     }, [info.details])
+
     return (
         <div className={styles.movie} style={{ color: 'var(--font-primary)' }}>
             <>
@@ -33,14 +35,7 @@ export default function Movie() {
                             {/* <div className={styles.actors}>Actors: {info.details.Actors}</div>
                             <div className={styles.actors}>Director(s): {info.details.Director}</div> */}
                         </div>
-                        <div className={styles.icons}>
-                            <i style={{ opacity: menuToggle ? '.5' : '' }} className="far fa-thumbs-up"></i>
-                            <i style={{ opacity: menuToggle ? '.5' : '' }} className="far fa-thumbs-down"></i>
-                            {!menuToggle ?
-                                <i style={{ opacity: !menuToggle ? '.5' : '' }} className="fas fa-eye-slash"></i> :
-                                <i style={{ opacity: !menuToggle ? '.5' : '' }} className="fas fa-eye"></i>}
-                            <i style={{ opacity: menuToggle ? '.5' : '' }} className="far fa-bookmark"></i>
-                        </div>
+                        <Actions mid={info.details.imdbID} />
                     </div>
                     {status === 'succeeded' ?
                         <div className={styles.more_section}>
@@ -49,8 +44,9 @@ export default function Movie() {
                                     className={styles.menu}
                                     style={{ opacity: menuToggle ? '.5' : '' }}>you may like this</div>
 
-                                <div onClick={() => setMenuToggle(!menuToggle)} className={styles.menu}
-                                    style={{ opacity: !menuToggle ? '.5' : '' }}>cast & crew</div>
+                                <div onClick={() => setMenuToggle(!menuToggle)}
+                                    style={{ opacity: !menuToggle ? '.5' : '' }} className={styles.menu}
+                                >cast & crew</div>
                             </div>
                             <div className={styles.selected_content}>
                                 {!menuToggle ?
@@ -64,7 +60,94 @@ export default function Movie() {
 
             </>
         </div>
+    )
+}
+
+export function Actions({ mid }) {
+    const status = useSelector(state => state.userData.status)
+    const uid = useSelector(state => state.currentUser.user.uid)
+    const movie = useSelector(state => state.movie)
+    const more = useSelector(state => state.movie.more)
+    const like = useSelector(state => state.movie.more.liked)
+    const dispatch = useDispatch()
+    const [toggle, setToggle] = useState(more)
 
 
+    const handleToggle = async (e) => {
+        var action = e.target.closest('button')
+        var info = {}
+        if (more.status === 'succeeded') {
+            switch (action.id) {
+                case 'like':
+                    console.log(like)
+                    let liked = 0
+                    if (more.liked !== 1) { liked = 1 }
+                    info.liked = liked
+                    break;
+
+                case 'dislike':
+                    console.log(more.liked)
+                    let liked2 = 0
+                    if (more.liked !== -1) { liked2 = -1 }
+                    info.liked = liked2
+
+                    break;
+
+                case 'unwatched':
+
+                    info.watched = true
+
+                    break;
+                case 'watched':
+                    info.watched = false
+
+                    break;
+                case 'myList': ''
+                    break;
+                default: '';
+            }
+            if (action.id) dispatch(updateMovieData({ uid, mid, data: info }))
+        }
+
+
+
+    }
+    useEffect(() => {
+        dispatch(getMovieInfo({ uid, mid }))
+        const icons = document.querySelector('#a_icons')
+        icons.addEventListener('click', handleToggle)
+        return () => icons.removeEventListener('click', handleToggle)
+    }, [])
+    useEffect(() => {
+        if (status === 'succeeded') {
+            dispatch(getMovieInfo({ uid, mid }))
+        }
+    }, [status])
+    useEffect(() => {
+        if (more.status === 'succeeded') {
+            setToggle(more)
+        }
+    }, [more.status])
+
+
+
+
+
+    return (
+        <div className={styles.icons} id='a_icons'  >
+            {more.status === 'succeeded' ? <>
+                <button className={styles.icon} id='like' style={{ opacity: more.liked === 1 ? '1' : '.5' }}>
+                    <i className="far fa-thumbs-up"  ></i></button>
+                <button className={styles.icon} id='dislike' style={{ opacity: more.liked === -1 ? '1' : '.5' }}>
+                    <i className="far fa-thumbs-down"  ></i></button>
+                {!more?.watched ?
+                    <button className={styles.icon} id='unwatched' style={{ opacity: '.5' }}><i className="fas fa-eye-slash" ></i></button>
+                    : <button className={styles.icon} id='watched'><i className="fas fa-eye" ></i></button>}
+                <button className={styles.icon} id='myList' style={{ opacity: more?.myList ? '1' : '.5' }}>
+                    <i className="fas fa-plus" ></i></button>
+            </> : ''}
+
+
+        </div>
     )
 }

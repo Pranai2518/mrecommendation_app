@@ -3,6 +3,7 @@
     --card-height:17rem;
     position: relative;
     padding: 1.5rem;
+    padding-bottom: 0;
    
 }
 
@@ -21,8 +22,10 @@
     height: var(--card-height);
     object-fit: cover;
     object-position: 50% 50%;
-    box-shadow: 0px 1px 5px var(--card-shadow);
+    box-shadow: 0px 0px 20px 5px var(--card-shadow);
+    /* border: 3px solid var(--secondary); */
 }
+ 
 .movie .movie_info{
     flex:2;
 }
@@ -44,15 +47,17 @@
     margin-top: 0.5rem;
 }
 .movie .movie_info .yr h3{
-    font-size: 0.95rem;
-    background-color: var(--third);
+    font-size: 1rem;
+    margin: 0;
+    /* background-color: var(--third); */
     padding: 0.1rem 0.3rem 0.1rem 0.3rem;
-    color: var(--font-secondary);
+    color: var(--third);
 }
 .movie .movie_info .desc
 {
+    /* border:1px solid red; */
     width: 50vw;
-    height: 3rem;
+    height: 5rem;
     overflow: auto;
     font-size: 1rem;
 }
@@ -72,14 +77,14 @@
 }
 .menu{
     width:max-content;
-    padding: .5rem 1rem;
+    padding: .4rem 1rem;
     background: var(--font-primary);
     color: var(--font-secondary);
     font-size: .8rem;
-    border-radius: 0 20px 0 0/ 0 30px 0 0;
-
+    border-radius: 0 15px 0 0/ 0 30px 0 0;
     cursor: pointer;
 }
+/* .menu:hover{border: 3px solid var(--third);} */
 
 /* SIMILAR MOVIES */
  
@@ -101,22 +106,21 @@
     gap: 1rem;
     /* opacity: .2; */
 }
-.movie .icons i{
-    font-size: 1.2rem;
-    background-color: var(--secondary);
-    /* background-color: var(--font-primary);
-    color: var(--font-secondary); */
-    --width:2.9rem;
+.icon{
+    border: none;
+    background-color: var(--third);
+    color: black;
+    width:2.9rem;
     border-radius: 50%;
-    width: var(--width);
     aspect-ratio: 1/1;
-    text-align: center;
-    line-height: var(--width);
-    
-   
-    /* cursor: pointer; */
+
+    display: grid;
+    place-items: center;
 }
-.movie .icons i:active{
+.movie .icons i{
+    font-size: 1.2rem;  
+}
+.movie .icon:active{
     transform: scale(.95);
 }
 /* .movie .icons i:hover{
