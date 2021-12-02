@@ -129,18 +129,18 @@ export function Actions({ mid }) {
 
     return (
         <div className={styles.icons} id='a_icons'  >
-            {more.status === 'succeeded' ? <>
-                <button className={styles.icon} id='like' style={{ opacity: more.liked === 1 ? '1' : '.5' }}>
-                    <i className="far fa-thumbs-up"  ></i></button>
-                <button className={styles.icon} id='dislike' style={{ opacity: more.liked === -1 ? '1' : '.5' }}>
-                    <i className="far fa-thumbs-down"  ></i></button>
-                {!more?.watched ?
-                    <button className={styles.icon} id='unwatched' style={{ opacity: '.5' }}>
-                        <i className="fas fa-eye-slash" ></i></button>
-                    : <button className={styles.icon} id='watched'><i className="fas fa-eye" ></i></button>}
-                <button className={styles.icon} id='myList' style={{ opacity: more?.myList ? '1' : '.5' }}>
-                    <i className="fas fa-plus" ></i></button>
-            </> : ''}
+
+            <button className={styles.icon} id='like' style={{ opacity: more.liked === 1 ? '1' : '.5' }}>
+                <i className="far fa-thumbs-up"  ></i></button>
+            <button className={styles.icon} id='dislike' style={{ opacity: more.liked === -1 ? '1' : '.5' }}>
+                <i className="far fa-thumbs-down"  ></i></button>
+            {!more?.watched ?
+                <button className={styles.icon} id='unwatched' style={{ opacity: '.5' }}>
+                    <i className="fas fa-eye-slash" ></i></button>
+                : <button className={styles.icon} id='watched'><i className="fas fa-eye" ></i></button>}
+            <button className={styles.icon} id='myList' style={{ opacity: more?.myList ? '1' : '.5' }}>
+                <i className="fas fa-plus" ></i></button>
+
 
 
         </div>

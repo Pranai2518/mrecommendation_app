@@ -16,8 +16,8 @@ export default function Layout({ children }) {
     const statusm = useSelector(state => state.userData.status)
 
     useEffect(() => {
-        if (statusm === 'succeeded' && modalStatus === false) { dispatch(fetchMovies(uid)); }
-        if (statusm === 'loaded' && modalStatus === false) dispatch(reloadList())
+        if (statusm === 'succeeded') { dispatch(fetchMovies(uid)); }
+        if (statusm === 'loaded') dispatch(reloadList())
     }, [statusm])//eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (status === 'succeeded') {
