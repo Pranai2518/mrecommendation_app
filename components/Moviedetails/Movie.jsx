@@ -76,41 +76,35 @@ export function Actions({ mid }) {
     const handleToggle = async (e) => {
         var action = e.target.closest('button')
         var info = {}
-        if (more.status === 'succeeded') {
-            switch (action.id) {
-                case 'like':
-                    console.log(like)
-                    let liked = 0
-                    if (more.liked !== 1) { liked = 1 }
-                    info.liked = liked
-                    break;
 
-                case 'dislike':
-                    console.log(more.liked)
-                    let liked2 = 0
-                    if (more.liked !== -1) { liked2 = -1 }
-                    info.liked = liked2
+        switch (action.id) {
+            case 'like':
+                console.log(like)
+                let liked = 0
+                if (more.liked !== 1) { liked = 1 }
+                info.liked = liked
+                break;
 
-                    break;
+            case 'dislike':
+                console.log(more.liked)
+                let liked2 = 0
+                if (more.liked !== -1) { liked2 = -1 }
+                info.liked = liked2
 
-                case 'unwatched':
+                break;
 
-                    info.watched = true
+            case 'unwatched':
+                info.watched = true
+                break;
+            case 'watched':
+                info.watched = false
 
-                    break;
-                case 'watched':
-                    info.watched = false
-
-                    break;
-                case 'myList': ''
-                    break;
-                default: '';
-            }
-            if (action.id) dispatch(updateMovieData({ uid, mid, data: info }))
+                break;
+            case 'myList': ''
+                break;
+            default: '';
         }
-
-
-
+        if (action.id) dispatch(updateMovieData({ uid, mid, data: info }))
     }
     useEffect(() => {
         dispatch(getMovieInfo({ uid, mid }))

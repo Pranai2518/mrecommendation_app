@@ -10,13 +10,14 @@ export default function Layout({ children }) {
     const uid = useSelector(state => state.currentUser.user.uid)
     const user = useSelector(state => state.currentUser.user)
     const status = useSelector(state => state.currentUser.status)
+    const modalStatus = useSelector(state => state.movie.open)
     const dispatch = useDispatch()
 
     const statusm = useSelector(state => state.userData.status)
 
     useEffect(() => {
-        if (statusm === 'succeeded') { dispatch(fetchMovies(uid)); }
-        if (statusm === 'loaded') dispatch(reloadList())
+        if (statusm === 'succeeded' && modalStatus === false) { dispatch(fetchMovies(uid)); }
+        if (statusm === 'loaded' && modalStatus === false) dispatch(reloadList())
     }, [statusm])//eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (status === 'succeeded') {
@@ -27,7 +28,7 @@ export default function Layout({ children }) {
                 dispatch(setUserStatus('idle'))
                 // console.log('old User')
             }
-            setTimeout(() => { dispatch(fetchMovies(uid)); }, 500)
+            // setTimeout(() => { dispatch(fetchMovies(uid)); }, 500)
 
         }
     }, [status])//eslint-disable-line react-hooks/exhaustive-deps
