@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-export const getMovie = createAsyncThunk('movie/getMovie', async ({ uid, mid }) => {
+export const getMovieInfo = createAsyncThunk('movie/getMovieInfo', async ({ uid, mid }) => {
     var data
-    await axios.get(`http://localhost:4500/user/${uid}/movie/${mid}`)
+    await axios.get(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/${uid}/movie/${mid}`)
         .then(res => data = res.data)
-    return data
+    // console.log(data[0])
+    return data[0]
 })
 
 export const getRecomendations = createAsyncThunk('movie/contentBased', async ({ id }) => {
@@ -17,7 +18,9 @@ export const getRecomendations = createAsyncThunk('movie/contentBased', async ({
 
 const initialState = {
     details: {},
-    more: {},
+    more: {
+        status: 'idle'
+    },
     recommends: [],
     open: false,
     status: 'idle'
@@ -37,11 +40,7 @@ const movie = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(getMovie.fulfilled, (state, action) => {
-                state.more = action.payload
-                state.status = 'succeeded'
-            })
-            .addCase(getRecomendations.pending, (state, action) => {
+            .addCase(getRecomendations.pending, (state) => {
                 state.status = 'loading'
             })
             .addCase(getRecomendations.fulfilled, (state, action) => {

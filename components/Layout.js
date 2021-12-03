@@ -10,6 +10,7 @@ export default function Layout({ children }) {
     const uid = useSelector(state => state.currentUser.user.uid)
     const user = useSelector(state => state.currentUser.user)
     const status = useSelector(state => state.currentUser.status)
+    const modalStatus = useSelector(state => state.movie.open)
     const dispatch = useDispatch()
 
     const statusm = useSelector(state => state.userData.status)
@@ -27,7 +28,7 @@ export default function Layout({ children }) {
                 dispatch(setUserStatus('idle'))
                 // console.log('old User')
             }
-            setTimeout(() => { dispatch(fetchMovies(uid)); }, 500)
+            setTimeout(() => { dispatch(fetchMovies(uid)); }, 300)
 
         }
     }, [status])//eslint-disable-line react-hooks/exhaustive-deps

@@ -1,6 +1,7 @@
 .search_m{
     position: absolute;
     width:100%;
+    min-height: 100vh;
     color: white;
 }
 .search_m::before{
@@ -26,6 +27,21 @@
     grid-row-gap: 1rem;
 }
 .search_m .content .m_card{margin:.5rem}
+
+/* LOAD BARS */
+.load_bars{
+    position: absolute;
+    inset:0;
+    display: grid;
+    place-items: center;
+}
+/* MESSAGE */
+.search_m .msg{
+    position: absolute;
+    inset:0;
+    display: grid;
+    place-items: center;
+}
 
 @media (max-width:600px){
     .search_m .content{
