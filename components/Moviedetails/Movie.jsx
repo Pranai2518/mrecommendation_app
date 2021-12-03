@@ -160,7 +160,7 @@ export function Actions({ mid }) {
                             <button data-src='add to list' onClick={handleAddToList} className={styles.icon} id='myList'  >
                                 <i className="fas fa-plus" ></i></button> :
                             <button data-src='remove from list' onClick={handleAddToList} className={styles.icon} id='myList'  >
-                                <i class="far fa-times-circle"></i></button>
+                                <i className="far fa-times-circle"></i></button>
                         }
 
                     </> : ''}
