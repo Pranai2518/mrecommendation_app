@@ -28,7 +28,7 @@ export default function Layout({ children }) {
                 dispatch(setUserStatus('idle'))
                 // console.log('old User')
             }
-            // setTimeout(() => { dispatch(fetchMovies(uid)); }, 500)
+            setTimeout(() => { dispatch(fetchMovies(uid)); }, 300)
 
         }
     }, [status])//eslint-disable-line react-hooks/exhaustive-deps

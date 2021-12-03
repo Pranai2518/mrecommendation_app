@@ -78,16 +78,12 @@ const userData = createSlice({
                 state.status = 'loading'
             })
             .addCase(deleteMovieData.fulfilled, (state, action) => {
-                // const movies = await state.movies.filter(i => i.movieId !== action.payload.movieId)
-                // state.movies = movies
                 state.status = 'succeeded'
             })
             .addCase(updateMovieData.pending, (state) => {
                 state.status = 'loading'
             })
             .addCase(updateMovieData.fulfilled, (state, action) => {
-                // const movies = await state.movies.filter(i => i.movieId !== action.payload.movieId)
-                // state.movies = movies
                 state.status = 'succeeded'
             })
     }

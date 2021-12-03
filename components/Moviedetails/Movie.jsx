@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { setOpen, getRecomendations, getMovieInfo } from '../../redux/features/movieSlice';
-import { updateMovieData, deleteMovieData, addMovieData } from '../../redux/features/userDataSlice'
+import { updateMovieData, deleteMovieData, addMovieData, fetchMovies } from '../../redux/features/userDataSlice'
 import styles from './movie.module.css'
 import Carousel from '../carousel/Carousel';
 import { Loading } from '../loadings/Loading'
@@ -64,85 +64,107 @@ export default function Movie() {
 }
 
 export function Actions({ mid }) {
-    const status = useSelector(state => state.userData.status)
+    const movies_status = useSelector(state => state.userData.status)
+    const allmovies = useSelector(state => state.userData.movies)
     const uid = useSelector(state => state.currentUser.user.uid)
-    const movie = useSelector(state => state.movie)
-    const more = useSelector(state => state.movie.more)
-    const like = useSelector(state => state.movie.more.liked)
+
+    // const [load, setLoad] = useState(true)
     const dispatch = useDispatch()
-    const [toggle, setToggle] = useState(more)
+    const [toggle, setToggle] = useState()
 
 
-    const handleToggle = async (e) => {
-        var action = e.target.closest('button')
-        var info = {}
 
-        switch (action.id) {
-            case 'like':
-                console.log(like)
-                let liked = 0
-                if (more.liked !== 1) { liked = 1 }
-                info.liked = liked
-                break;
+    const handleLike = () => {
 
-            case 'dislike':
-                console.log(more.liked)
-                let liked2 = 0
-                if (more.liked !== -1) { liked2 = -1 }
-                info.liked = liked2
+        let a
+        if (toggle.liked === 1) { a = 0 }
+        else { a = 1 }
+        const mIfo = allmovies.find(i => i.movieId === mid)
+        if (!mIfo) dispatch(addMovieData({ ...toggle, movieId: mid, uid: uid, liked: a }))
+        else if (mIfo.liked === 1 && !mIfo.watched && mIfo.myList === false) dispatch(deleteMovieData({ uid, mid }))
+        else dispatch(updateMovieData({ uid, mid, data: { liked: a } }))
+    }
+    const handleDisLike = () => {
+        console.log(toggle.liked)
+        let a
+        if (toggle.liked === -1) { a = 0 }
+        else { a = -1 }
+        const mIfo = allmovies.find(i => i.movieId === mid)
+        if (!mIfo) dispatch(addMovieData({ ...toggle, movieId: mid, uid: uid, liked: a }))
+        else if (mIfo.liked === -1 && !mIfo.watched && mIfo.myList === false) dispatch(deleteMovieData({ uid, mid }))
+        else dispatch(updateMovieData({ uid, mid, data: { liked: a } }))
+    }
+    const handleWatched = () => {
+        const mIfo = allmovies.find(i => i.movieId === mid)
+        if (!mIfo) dispatch(addMovieData({ ...toggle, movieId: mid, uid: uid, watched: !toggle.watched }))
+        else if (mIfo.liked === 0 && mIfo.watched && mIfo.myList === false) dispatch(deleteMovieData({ uid, mid }))
+        else dispatch(updateMovieData({ uid, mid, data: { watched: !toggle.watched } }))
 
-                break;
+    }
+    const handleAddToList = () => {
+        const mIfo = allmovies.find(i => i.movieId === mid)
+        if (!mIfo) dispatch(addMovieData({ ...toggle, movieId: mid, uid: uid, myList: true }))
 
-            case 'unwatched':
-                info.watched = true
-                break;
-            case 'watched':
-                info.watched = false
-
-                break;
-            case 'myList': ''
-                break;
-            default: '';
-        }
-        if (action.id) dispatch(updateMovieData({ uid, mid, data: info }))
+        else if (mIfo.myList === false) dispatch(updateMovieData({ uid, mid, data: { ...toggle, myList: true } }))
+        else if (mIfo.liked === 0 && !mIfo.watched && mIfo.myList === true) dispatch(deleteMovieData({ uid, mid }))
+        else dispatch(updateMovieData({ uid, mid, data: { ...toggle, myList: false } }))
     }
     useEffect(() => {
-        dispatch(getMovieInfo({ uid, mid }))
-        const icons = document.querySelector('#a_icons')
-        icons.addEventListener('click', handleToggle)
-        return () => icons.removeEventListener('click', handleToggle)
+        dispatch(fetchMovies(uid))
     }, [])
+
     useEffect(() => {
-        if (status === 'succeeded') {
-            dispatch(getMovieInfo({ uid, mid }))
+        if (movies_status === 'loaded') {
+            const movie = allmovies.find(i => i.movieId === mid)
+            if (movie) {
+                setToggle(movie)
+            } else {
+                const obj = {
+                    liked: 0,
+                    watched: false,
+                    myList: false
+                }
+                setToggle(obj)
+            }
         }
-    }, [status])
-    useEffect(() => {
-        if (more.status === 'succeeded') {
-            setToggle(more)
-        }
-    }, [more.status])
+    }, [movies_status])
 
 
 
 
 
     return (
-        <div className={styles.icons} id='a_icons'  >
+        <div className={styles.actions}>
+            <div className={styles.icons}  >
+                {toggle ?
+                    <>
+                        {toggle.liked === 1 ?
+                            <button data-src='liked' onClick={handleLike} className={styles.icon} id='like' style={{ opacity: toggle.liked === 1 ? '1' : '' }}>
+                                <i className="fas fa-thumbs-up"  ></i></button> :
+                            <button data-src='like it' onClick={handleLike} className={styles.icon} id='like' style={{ opacity: toggle.liked === 1 ? '1' : '' }}>
+                                <i className="far fa-thumbs-up"  ></i></button>
+                        }
+                        {toggle.liked === -1 ?
+                            <button data-src='disliked' onClick={handleDisLike} className={styles.icon} id='dislike' style={{ opacity: toggle.liked === -1 ? '1' : '' }}>
+                                <i className="fas fa-thumbs-down"  ></i></button> :
+                            <button data-src='dislike it' onClick={handleDisLike} className={styles.icon} id='dislike' style={{ opacity: toggle.liked === -1 ? '1' : '' }}>
+                                <i className="far fa-thumbs-down"  ></i></button>
+                        }
+                        {!toggle.watched ?
+                            <button data-src='have u watched it' onClick={handleWatched} className={styles.icon} id='unwatched' >
+                                <i className="fas fa-eye-slash" ></i></button>
+                            : <button data-src='watched' onClick={handleWatched} className={styles.icon} id='watched'>
+                                <i className="fas fa-eye" ></i></button>}
 
-            <button className={styles.icon} id='like' style={{ opacity: more.liked === 1 ? '1' : '.5' }}>
-                <i className="far fa-thumbs-up"  ></i></button>
-            <button className={styles.icon} id='dislike' style={{ opacity: more.liked === -1 ? '1' : '.5' }}>
-                <i className="far fa-thumbs-down"  ></i></button>
-            {!more?.watched ?
-                <button className={styles.icon} id='unwatched' style={{ opacity: '.5' }}>
-                    <i className="fas fa-eye-slash" ></i></button>
-                : <button className={styles.icon} id='watched'><i className="fas fa-eye" ></i></button>}
-            <button className={styles.icon} id='myList' style={{ opacity: more?.myList ? '1' : '.5' }}>
-                <i className="fas fa-plus" ></i></button>
+                        {!toggle.myList ?
+                            <button data-src='add to list' onClick={handleAddToList} className={styles.icon} id='myList'  >
+                                <i className="fas fa-plus" ></i></button> :
+                            <button data-src='remove from list' onClick={handleAddToList} className={styles.icon} id='myList'  >
+                                <i class="far fa-times-circle"></i></button>
+                        }
 
-
-
+                    </> : ''}
+            </div>
         </div>
     )
 }

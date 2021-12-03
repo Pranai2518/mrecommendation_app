@@ -40,16 +40,6 @@ const movie = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(getMovieInfo.pending, (state) => {
-
-                state.more.status = 'loading'
-            })
-            .addCase(getMovieInfo.fulfilled, (state, action) => {
-                console.log('ingetinfo--')
-                console.log(action.payload)
-                const info = action.payload ? action.payload : { liked: 0, watched: false, myList: false }
-                state.more = { ...info, status: 'succeeded' }
-            })
             .addCase(getRecomendations.pending, (state) => {
                 state.status = 'loading'
             })
@@ -57,9 +47,6 @@ const movie = createSlice({
                 state.recommends = action.payload.recommends
                 state.status = 'succeeded'
             })
-        // .addCase(getMovieInfo.fulfilled, (state, action) => {
-        //     state.
-        // })
     }
 })
 
