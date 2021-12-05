@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { setOpen, getRecomendations, getMovieInfo } from '../../redux/features/movieSlice';
 import { updateMovieData, deleteMovieData, addMovieData, fetchMovies } from '../../redux/features/userDataSlice'
@@ -68,14 +68,14 @@ export function Actions({ mid }) {
     const allmovies = useSelector(state => state.userData.movies)
     const uid = useSelector(state => state.currentUser.user.uid)
 
-    // const [load, setLoad] = useState(true)
+    const [load, setLoad] = useState({ l1: false, l2: false, l3: false, l4: false })
     const dispatch = useDispatch()
     const [toggle, setToggle] = useState()
 
 
 
     const handleLike = () => {
-
+        setLoad({ ...load, l1: true })
         let a
         if (toggle.liked === 1) { a = 0 }
         else { a = 1 }
@@ -85,7 +85,7 @@ export function Actions({ mid }) {
         else dispatch(updateMovieData({ uid, mid, data: { liked: a } }))
     }
     const handleDisLike = () => {
-        console.log(toggle.liked)
+        setLoad({ ...load, l2: true })
         let a
         if (toggle.liked === -1) { a = 0 }
         else { a = -1 }
@@ -95,6 +95,7 @@ export function Actions({ mid }) {
         else dispatch(updateMovieData({ uid, mid, data: { liked: a } }))
     }
     const handleWatched = () => {
+        setLoad({ ...load, l3: true })
         const mIfo = allmovies.find(i => i.movieId === mid)
         if (!mIfo) dispatch(addMovieData({ ...toggle, movieId: mid, uid: uid, watched: !toggle.watched }))
         else if (mIfo.liked === 0 && mIfo.watched && mIfo.myList === false) dispatch(deleteMovieData({ uid, mid }))
@@ -102,6 +103,7 @@ export function Actions({ mid }) {
 
     }
     const handleAddToList = () => {
+        setLoad({ ...load, l4: true })
         const mIfo = allmovies.find(i => i.movieId === mid)
         if (!mIfo) dispatch(addMovieData({ ...toggle, movieId: mid, uid: uid, myList: true }))
 
@@ -126,6 +128,7 @@ export function Actions({ mid }) {
                 }
                 setToggle(obj)
             }
+            setLoad({ l1: false, l2: false, l3: false, l4: false })
         }
     }, [movies_status])
 
@@ -138,33 +141,51 @@ export function Actions({ mid }) {
             <div className={styles.icons}  >
                 {toggle ?
                     <>
-                        {toggle.liked === 1 ?
-                            <button data-src='liked' onClick={handleLike} className={styles.icon} id='like' style={{ opacity: toggle.liked === 1 ? '1' : '' }}>
-                                <i className="fas fa-thumbs-up"  ></i></button> :
-                            <button data-src='like it' onClick={handleLike} className={styles.icon} id='like' style={{ opacity: toggle.liked === 1 ? '1' : '' }}>
-                                <i className="far fa-thumbs-up"  ></i></button>
-                        }
-                        {toggle.liked === -1 ?
-                            <button data-src='disliked' onClick={handleDisLike} className={styles.icon} id='dislike' style={{ opacity: toggle.liked === -1 ? '1' : '' }}>
-                                <i className="fas fa-thumbs-down"  ></i></button> :
-                            <button data-src='dislike it' onClick={handleDisLike} className={styles.icon} id='dislike' style={{ opacity: toggle.liked === -1 ? '1' : '' }}>
-                                <i className="far fa-thumbs-down"  ></i></button>
-                        }
-                        {!toggle.watched ?
-                            <button data-src='have u watched it' onClick={handleWatched} className={styles.icon} id='unwatched' >
-                                <i className="fas fa-eye-slash" ></i></button>
-                            : <button data-src='watched' onClick={handleWatched} className={styles.icon} id='watched'>
-                                <i className="fas fa-eye" ></i></button>}
+                        {!load.l1 ?
+                            <>
+                                {toggle.liked === 1 ?
+                                    <button data-src='liked' onClick={handleLike} className={styles.icon} id='like' style={{ opacity: toggle.liked === 1 ? '1' : '' }}>
+                                        <i className="fas fa-thumbs-up"  ></i></button> :
+                                    <button data-src='like it' onClick={handleLike} className={styles.icon} id='like' style={{ opacity: toggle.liked === 1 ? '1' : '' }}>
+                                        <i className="far fa-thumbs-up"  ></i></button>
+                                }</> : <BtnLoad />}
 
-                        {!toggle.myList ?
-                            <button data-src='add to list' onClick={handleAddToList} className={styles.icon} id='myList'  >
-                                <i className="fas fa-plus" ></i></button> :
-                            <button data-src='remove from list' onClick={handleAddToList} className={styles.icon} id='myList'  >
-                                <i className="far fa-times-circle"></i></button>
-                        }
+                        {!load.l2 ?
+                            <>
+                                {toggle.liked === -1 ?
+                                    <button data-src='disliked' onClick={handleDisLike} className={styles.icon} id='dislike' style={{ opacity: toggle.liked === -1 ? '1' : '' }}>
+                                        <i className="fas fa-thumbs-down"  ></i></button> :
+                                    <button data-src='dislike it' onClick={handleDisLike} className={styles.icon} id='dislike' style={{ opacity: toggle.liked === -1 ? '1' : '' }}>
+                                        <i className="far fa-thumbs-down"  ></i></button>
+                                }</> : <BtnLoad />}
+
+                        {!load.l3 ?
+                            <>
+                                {!toggle.watched ?
+                                    <button data-src='watched ?' onClick={handleWatched} className={styles.icon} id='unwatched' >
+                                        <i className="fas fa-eye-slash" ></i></button>
+                                    : <button data-src='watched' onClick={handleWatched} className={styles.icon} id='watched'>
+                                        <i className="fas fa-eye" ></i></button>}</> : <BtnLoad />}
+
+                        {!load.l4 ?
+                            <>
+                                {!toggle.myList ?
+                                    <button data-src='add to list' onClick={handleAddToList} className={styles.icon} id='myList'  >
+                                        <i className="fas fa-plus" ></i></button> :
+                                    <button data-src='remove from list' onClick={handleAddToList} className={styles.icon} id='myList'  >
+                                        <i className="far fa-times-circle"></i></button>
+                                }</> : <BtnLoad />}
 
                     </> : ''}
             </div>
+        </div>
+    )
+}
+
+export function BtnLoad() {
+    return (
+        <div className={styles.btnloader}>
+            <span></span>
         </div>
     )
 }

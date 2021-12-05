@@ -11,6 +11,7 @@ export const darkTheme = {
     fontP: '#fff',
     fontS: '#000'
 }
+
 export const lightTheme = {
     color1: 'hsl(174, 80%, 80%)',
     color2: '#86A8E7',

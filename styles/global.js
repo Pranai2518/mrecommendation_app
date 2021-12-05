@@ -16,6 +16,5 @@ body{
 
      --card-shadow:${({ theme }) => theme.cardShadow};
      --button-shadow:${({ theme }) => theme.buttonShadow};
- 
 }
 `
