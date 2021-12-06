@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { useSelector, useDispatch } from 'react-redux'
 import { addMovieData, deleteMovieData, updateMovieData } from '../../redux/features/userDataSlice'
 // import { fetchMovies } from '../../redux/features/userDataSlice'
-import { setOpen, setMovieId } from '../../redux/features/movieSlice'
+import { setOpen, setMovieDetails } from '../../redux/features/movieSlice'
 
 const MCard = styled.div.attrs((props) => ({
     className: `m_card ${props.size}`
@@ -38,52 +38,19 @@ export default function Card({ id, size }) {
 
     const [status, setStatus] = useState(false)
     const fix = async () => {
-        const mIfo = await moviesInfo.find(i => i.movieId === details.imdbID)
+        const mIfo = await moviesInfo.find(i => i.movieId === details.movieId)
         if (mIfo) { setInList(mIfo.myList) }
         else { setInList(false) }
         setStatus(false)
     }
     const fetchMovie = async (signal) => {
         setLoading(true)
-        // var options = {
-        //     method: 'GET',
-        //     url: `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${id}`,
-        //     headers: {
-        //         'x-rapidapi-host': 'imdb-internet-movie-database-unofficial.p.rapidapi.com',
-        //         'x-rapidapi-key': '9f308b0b1emsh5b18f79da1aa341p1a6289jsnbb369dd16452'
-        //     },
-        //     signal: signal,
-
-        // };
-        // await axios.request(options)
-        //     .then(res => {
-        //         var info = res.data
-        //         var obj = {
-        //             imdbID: info.id,
-        //             imdbRating: info.rating,
-        //             Title: info.title,
-        //             Plot: info.plot,
-        //             Poster: info.poster,
-        //             Year: info.year,
-        //             Runtime: info.length,
-        //             Rated: 'none',
-        //             Actors: 'none',
-        //             Director: 'none'
-        //         }
-        //         setDetais(obj)
-        //         setLoading(false)
-        //     })
-        //     .catch(err => { console.log(err) })
-
-
-        await axios.get(`https://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDB_KEY}&i=${id}`,
-            { signal: signal },
-            { headers: { 'Access-Control-Allow-Origin': `${process.env.NEXT_PUBLIC_URL}`, 'Access-Control-Allow-Credentials': true } })
+        await axios.get(`${process.env.NEXT_PUBLIC_MOVIE_SERVER}/movies/info/${id}`,
+            { signal: signal })
             .then(data => {
                 const res = data.data
                 setDetais(res)
                 setLoading(false)
-
             })
             .catch(err => { console.log(err) })
 
@@ -101,7 +68,7 @@ export default function Card({ id, size }) {
     }, [])//eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        if (details?.imdbID) fix()
+        if (details?.movieId) fix()
     }, [moviesInfo, details])//eslint-disable-line react-hooks/exhaustive-deps
 
 
@@ -112,14 +79,14 @@ export default function Card({ id, size }) {
         var obj = {
             uid: uid,
             movieId: details.imdbID,
-            title: details.Title,
+            title: details.title,
             liked: 0,
             watched: false,
             myList: true,
         }
-        const mIfo = moviesInfo.find(i => i.movieId === details.imdbID)
+        const mIfo = moviesInfo.find(i => i.movieId === details.movieId)
         if (!mIfo) dispatch(addMovieData(obj))
-        else dispatch(updateMovieData({ uid, mid: details.imdbID, data: { ...mIfo, myList: true } }))
+        else dispatch(updateMovieData({ uid, mid: details.movieId, data: { ...mIfo, myList: true } }))
         // console.log(`added:${obj.title}`);
 
 
@@ -128,20 +95,20 @@ export default function Card({ id, size }) {
     }
     const handleDelete = async () => {
         setStatus(true)
-        const mIfo = await moviesInfo.find(i => i.movieId === details.imdbID)
+        const mIfo = await moviesInfo.find(i => i.movieId === details.movieId)
         if (mIfo.liked === 0 && !mIfo.watched)
-            dispatch(deleteMovieData({ uid, mid: details.imdbID }))
-        else dispatch(updateMovieData({ uid, mid: details.imdbID, data: { ...mIfo, myList: false } }))
+            dispatch(deleteMovieData({ uid, mid: details.movieId }))
+        else dispatch(updateMovieData({ uid, mid: details.movieId, data: { ...mIfo, myList: false } }))
     }
     return (
         <MCard className={styles.m_card} size={size}>
             {!loading && details ? <>
-                <div className={styles.image} onClick={() => { dispatch(setMovieId(details)); dispatch(setOpen(true)); }}>
-                    <Image objectFit='cover' layout='fill' className={styles.poster} src={details.Poster} priority alt="name1" />
+                <div className={styles.image} onClick={() => { dispatch(setMovieDetails(details)); dispatch(setOpen(true)); }}>
+                    <Image objectFit='cover' layout='fill' className={styles.poster} src={details.poster} priority alt="name1" />
                 </div>
 
                 <div className={styles.top}>
-                    <div className={styles.imdb}>{details.imdbRating}</div>
+                    <div className={styles.imdb}>{parseFloat(details.imdbRating).toFixed(1)}</div>
                     <div className={styles.options} >
                         {!status ? <>
                             {inList ?
@@ -152,13 +119,13 @@ export default function Card({ id, size }) {
                 </div>
 
                 <div className={styles.info}>
-                    <div className={styles.title} id='card_title' >{details.Title}</div>
+                    <div className={styles.title} id='card_title' >{String(details.title).substring(0, 30)}</div>
                     <div className={styles.more} id='card_more' >
-                        <div className={styles.durt}>{details.Runtime}</div>
+                        <div className={styles.durt}>{details.runtime}</div>
+                        {/* <span></span>
+                        <div className={styles.rate}>{details.Rated}</div> */}
                         <span></span>
-                        <div className={styles.rate}>{details.Rated}</div>
-                        <span></span>
-                        <div className={styles.year}>{details.Year}</div>
+                        <div className={styles.year}>{details.year}</div>
                     </div>
                 </div>
                 {/* <div className="details">View</div> */}

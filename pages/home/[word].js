@@ -16,7 +16,7 @@ function Search() {
     const status = useSelector(state => state.currentUser.status)
 
     const getAllIds = async (signal) => {
-        await axios.get(`${process.env.NEXT_PUBLIC_SERVER}/search/${word}`, { signal: signal })
+        await axios.get(`${process.env.NEXT_PUBLIC_MOVIE_SERVER}/movies/search/${word}`, { signal: signal })
             .then(data => {
                 setIds(data.data.result)
                 setLoading(false)

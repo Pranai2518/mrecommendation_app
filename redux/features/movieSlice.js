@@ -1,26 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-export const getMovieInfo = createAsyncThunk('movie/getMovieInfo', async ({ uid, mid }) => {
-    var data
-    await axios.get(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/${uid}/movie/${mid}`)
-        .then(res => data = res.data)
-    // console.log(data[0])
-    return data[0]
-})
+// export const getMovieInfo = createAsyncThunk('movie/getMovieInfo', async ({ uid, mid }) => {
+//     var data
+//     await axios.get(`${process.env.NEXT_PUBLIC_DATA_SERVER}/user/${uid}/movie/${mid}`)
+//         .then(res => data = res.data)
+//     return data[0]
+// })
 
-export const getRecomendations = createAsyncThunk('movie/contentBased', async ({ id }) => {
+export const getRecomendations = createAsyncThunk('movie/contentbased/', async ({ id }) => {
     var data
-    await axios.get(`${process.env.NEXT_PUBLIC_SERVER}/recommend?method=cb&id=${id}`)
-        .then(res => data = res.data)
+    await axios.get(`${process.env.NEXT_PUBLIC_MOVIE_SERVER}/recommend/contentbased/${id}`)
+        .then(res => { data = res.data.result })
+        .catch(err => cosole.log(err))
     return data
 })
 
 const initialState = {
     details: {},
-    more: {
-        status: 'idle'
-    },
     recommends: [],
     open: false,
     status: 'idle'
@@ -33,7 +30,7 @@ const movie = createSlice({
         setOpen: (state, action) => {
             state.open = action.payload
         },
-        setMovieId: (state, action) => {
+        setMovieDetails: (state, action) => {
 
             state.details = action.payload
         }
@@ -44,11 +41,11 @@ const movie = createSlice({
                 state.status = 'loading'
             })
             .addCase(getRecomendations.fulfilled, (state, action) => {
-                state.recommends = action.payload.recommends
+                state.recommends = action.payload
                 state.status = 'succeeded'
             })
     }
 })
 
-export const { setOpen, setMovieId } = movie.actions
+export const { setOpen, setMovieDetails } = movie.actions
 export default movie.reducer
