@@ -102,25 +102,26 @@
     position: relative;
     display: grid;
     place-items: center;
-    padding: .4rem;
-   
-    
+    padding: 5%;
+    width:2.9rem;
+    aspect-ratio: 1/1;
 }
 .btnloader span{
-    position: relative;
-    width:2rem;
-    border-radius: 50%;
+    width:1.5rem;
     aspect-ratio: 1/1;
-     
-    border-right: 2px solid transparent !important;
+    border-radius: 50%;
+    
     transform: rotate(0deg);
-    border:2px solid rgba(0,0,0,0.25);
+    border:1px solid rgba(0,0,0,0.25);
+    border-right: 1px solid transparent !important;
     animation:spinbtn .8s ease infinite;
 }
 @keyframes spinbtn{
     0%{transform: rotate(0deg);}
     100%{transform: rotate(360deg);}
 }
+
+
 /* ICONS */
 .actions{
     flex:.2;

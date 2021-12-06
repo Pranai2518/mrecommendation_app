@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { setOpen, getRecomendations, getMovieInfo } from '../../redux/features/movieSlice';
+import { setOpen, getRecomendations } from '../../redux/features/movieSlice';
 import { updateMovieData, deleteMovieData, addMovieData, fetchMovies } from '../../redux/features/userDataSlice'
 import styles from './movie.module.css'
 import Carousel from '../carousel/Carousel';
@@ -8,34 +8,37 @@ import { Loading } from '../loadings/Loading'
 
 export default function Movie() {
     const status = useSelector(state => state.movie.status)
-    const info = useSelector(state => state.movie)
+    const details = useSelector(state => state.movie.details)
     const recommends = useSelector(state => state.movie.recommends)
     const dispatch = useDispatch()
     const [menuToggle, setMenuToggle] = useState(false)
     useEffect(() => {
-        dispatch(getRecomendations({ id: info.details.imdbID }))
-    }, [info.details])
+        dispatch(getRecomendations({ id: details.movieId }))
+    }, [details])
 
     return (
         <div className={styles.movie} style={{ color: 'var(--font-primary)' }}>
             <>
-                {info ? <>
+                {details ? <>
                     <div className={styles.mov_details}>
-                        <img className={styles.main_img} src={info.details?.Poster} />
+                        <img className={styles.main_img} src={details?.poster} />
                         <div className={styles.movie_info}>
                             <div className={styles.genres}>
-                                <p>{info.details.Genre}</p>
+                                {details.genre?.map(name => (
+                                    <p key={Math.random() * 1000} >{name}</p>
+                                ))}
+
                             </div>
-                            <h1>{info.details.Title}</h1>
+                            <h1>{details.title}</h1>
                             <div className={styles.yr}>
-                                <h3>{info.details.Year}</h3>
-                                <p>Imdb: {info.details.imdbRating}</p>
+                                <h3>{details.year}</h3>
+                                <p>Imdb: {parseFloat(details.imdbRating).toFixed(1)}</p>
                             </div>
-                            <p className={styles.desc}>{info.details.Plot}</p>
+                            <p className={styles.desc}>{details.description}</p>
                             {/* <div className={styles.actors}>Actors: {info.details.Actors}</div>
                             <div className={styles.actors}>Director(s): {info.details.Director}</div> */}
                         </div>
-                        <Actions mid={info.details.imdbID} />
+                        <Actions mid={details.movieId} />
                     </div>
                     {status === 'succeeded' ?
                         <div className={styles.more_section}>
@@ -50,7 +53,7 @@ export default function Movie() {
                             </div>
                             <div className={styles.selected_content}>
                                 {!menuToggle ?
-                                    <Carousel className={styles.carousel1} list={recommends?.map(i => i.imdbId)} size='small' /> : ''}
+                                    <Carousel className={styles.carousel1} list={recommends} size='small' /> : ''}
                             </div>
                         </div> : <div style={{ marginTop: '5%', display: 'grid', placeItems: 'center' }} ><Loading /></div>}
 
