@@ -25,14 +25,15 @@ export default function Movie() {
                         <div className={styles.movie_info}>
                             <div className={styles.genres}>
                                 {details.genre?.map(name => (
-                                    <p key={Math.random() * 1000} >{name}</p>
+                                    <div key={Math.random() * 1000} className={styles.genre}>{name}</div>
                                 ))}
 
                             </div>
                             <h1>{details.title}</h1>
                             <div className={styles.yr}>
                                 <h3>{details.year}</h3>
-                                <p>Imdb: {parseFloat(details.imdbRating).toFixed(1)}</p>
+                                <h4>IMDb</h4>
+                                <p>{parseFloat(details.imdbRating).toFixed(1)}</p>
                             </div>
                             <p className={styles.desc}>{details.description}</p>
                             {/* <div className={styles.actors}>Actors: {info.details.Actors}</div>
