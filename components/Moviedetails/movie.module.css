@@ -29,16 +29,20 @@
 .movie .movie_info{
     flex:2;
 }
-.movie .movie_info .genre{
+.genres{
+    /* border:1px solid red; */
     display: flex;
-    flex-wrap: wrap;
+    gap:.5rem;
+    margin-bottom: 1rem;
+}
+.movie .movie_info .genre{ 
     gap: 0.5rem;
     width: max-content;
-    padding: 0rem .6rem;
+    padding: .2rem .6rem;
     background: var(--secondary);
+    font-size: .8rem;
     /* color: var(--primary); */
     border-radius: 5px;
-    margin-bottom: 10px;
 }
 .movie .movie_info .genre::before{
     display: flex;
@@ -53,7 +57,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: .5rem;
     margin-top: 0.5rem;
 }
 .movie .movie_info .yr h3{

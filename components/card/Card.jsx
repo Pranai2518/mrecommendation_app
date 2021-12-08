@@ -78,7 +78,7 @@ export default function Card({ id, size }) {
         setStatus(true)
         var obj = {
             uid: uid,
-            movieId: details.imdbID,
+            movieId: details.movieId,
             title: details.title,
             liked: 0,
             watched: false,
@@ -103,7 +103,7 @@ export default function Card({ id, size }) {
     return (
         <MCard className={styles.m_card} size={size}>
             {!loading && details ? <>
-                <div className={styles.image} onClick={() => { dispatch(setMovieDetails(details)); dispatch(setOpen(true)); }}>
+                <div className={styles.image} >
                     <Image objectFit='cover' layout='fill' className={styles.poster} src={details.poster} priority alt="name1" />
                 </div>
 
@@ -118,8 +118,8 @@ export default function Card({ id, size }) {
                     </div>
                 </div>
 
-                <div className={styles.info}>
-                    <div className={styles.title} id='card_title' >{String(details.title).substring(0, 30)}</div>
+                <div className={styles.info} onClick={() => { dispatch(setMovieDetails(details)); dispatch(setOpen(true)); }}>
+                    <div className={styles.title} id='card_title'>{String(details.title).substring(0, 40)}</div>
                     <div className={styles.more} id='card_more' >
                         <div className={styles.durt}>{details.runtime}</div>
                         {/* <span></span>

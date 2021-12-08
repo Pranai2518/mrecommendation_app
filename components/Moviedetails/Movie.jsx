@@ -5,6 +5,7 @@ import { updateMovieData, deleteMovieData, addMovieData, fetchMovies } from '../
 import styles from './movie.module.css'
 import Carousel from '../carousel/Carousel';
 import { Loading } from '../loadings/Loading'
+import CastAndCrew from './CastAndCrew'
 
 export default function Movie() {
     const status = useSelector(state => state.movie.status)
@@ -27,7 +28,6 @@ export default function Movie() {
                                 {details.genre?.map(name => (
                                     <div key={Math.random() * 1000} className={styles.genre}>{name}</div>
                                 ))}
-
                             </div>
                             <h1>{details.title}</h1>
                             <div className={styles.yr}>
@@ -41,22 +41,28 @@ export default function Movie() {
                         </div>
                         <Actions mid={details.movieId} />
                     </div>
-                    {status === 'succeeded' ?
-                        <div className={styles.more_section}>
-                            <div className={styles.menus}>
-                                <div onClick={() => setMenuToggle(!menuToggle)}
-                                    className={styles.menu}
-                                    style={{ opacity: menuToggle ? '.5' : '' }}>you may like this</div>
 
-                                <div onClick={() => setMenuToggle(!menuToggle)}
-                                    style={{ opacity: !menuToggle ? '.5' : '' }} className={styles.menu}
-                                >cast & crew</div>
-                            </div>
-                            <div className={styles.selected_content}>
-                                {!menuToggle ?
-                                    <Carousel className={styles.carousel1} list={recommends} size='small' /> : ''}
-                            </div>
-                        </div> : <div style={{ marginTop: '5%', display: 'grid', placeItems: 'center' }} ><Loading /></div>}
+                    <div className={styles.more_section}>
+                        <div className={styles.menus}>
+                            <div onClick={() => setMenuToggle(!menuToggle)}
+                                className={styles.menu}
+                                style={{ opacity: menuToggle ? '.5' : '' }}>you may like this</div>
+
+                            <div onClick={() => setMenuToggle(!menuToggle)}
+                                style={{ opacity: !menuToggle ? '.5' : '' }} className={styles.menu}
+                            >cast & crew</div>
+                        </div>
+                        <div className={styles.selected_content}>
+                            {!menuToggle ?
+                                <>
+                                    {status === 'succeeded' ?
+                                        <Carousel className={styles.carousel1} list={recommends} size='small' />
+                                        : <div style={{ marginTop: '5%', display: 'grid', placeItems: 'center' }} ><Loading /></div>}
+                                </> :
+                                <CastAndCrew leads={details.actors} directors={details.directors} />
+                            }
+                        </div>
+                    </div>
 
                     <button className={styles.cbtn} style={{ background: 'none', color: 'var(--font-primary)' }} onClick={() => dispatch(setOpen(false))}>
                         <i className="fas fa-times"></i></button>
@@ -71,7 +77,7 @@ export function Actions({ mid }) {
     const movies_status = useSelector(state => state.userData.status)
     const allmovies = useSelector(state => state.userData.movies)
     const uid = useSelector(state => state.currentUser.user.uid)
-
+    const details = useSelector(state => state.movie.details)
     const [load, setLoad] = useState({ l1: false, l2: false, l3: false, l4: false })
     const dispatch = useDispatch()
     const [toggle, setToggle] = useState()
@@ -126,6 +132,7 @@ export function Actions({ mid }) {
                 setToggle(movie)
             } else {
                 const obj = {
+                    title: details.title,
                     liked: 0,
                     watched: false,
                     myList: false
@@ -142,7 +149,7 @@ export function Actions({ mid }) {
 
     return (
         <div className={styles.actions}>
-            <div className={styles.icons}  >
+            <div className={styles.icons}>
                 {toggle ?
                     <>
                         {!load.l1 ?

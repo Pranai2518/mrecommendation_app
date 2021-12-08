@@ -12,6 +12,7 @@ const Div = styled.div.attrs(props => ({
 
 export default function Carousel({ list, size }) {
     const settings = {
+        lazyLoad: true,
         dots: false,
         speed: 500,
         infinite: false,
@@ -34,15 +35,9 @@ export default function Carousel({ list, size }) {
                     slidesToScroll: 4,
                 }
             },
+
             {
                 breakpoint: 1200,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
-                }
-            },
-            {
-                breakpoint: 948,
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 3,
